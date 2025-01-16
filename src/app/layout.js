@@ -1,6 +1,6 @@
 
 import "./globals.css";
-
+import Navigation from "./components/Navigation/Navigation";
 
 
 export const metadata = {
@@ -14,6 +14,7 @@ export default function RootLayout({ children }) {
       <body
         className={`font-public-sans antialiased`}
       >
+        <Navigation />
         {children}
       </body>
     </html>
