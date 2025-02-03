@@ -1,20 +1,17 @@
 
-import "./globals.css";
-import Navigation from "./components/Navigation/Navigation";
-
-
+import '../../globals.css'
 export const metadata = {
-  title: "Personal finance app",
-  description: "Created using a base template",
+  title: "Login | Personal finance",
+  description: "Login to your app",
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body
         className={`font-public-sans antialiased`}
       >
-        <Navigation />
         {children}
       </body>
     </html>

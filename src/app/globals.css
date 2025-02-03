@@ -17,6 +17,11 @@
   
 
 }
+input{
+  border:1px solid var(--beige-500);
+  padding:.75rem 1.25rem;
+  border-radius: 10px;
+}
 
 
 @layer utilities{
@@ -41,10 +46,38 @@
   .preset-5-bold{
     @apply text-[12px] leading-[150%] font-bold;
   }
+  
+}
+@keyframes dropdown {
+  0% {
+    scale: 0;
+    
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+/* Apply the animation to an element */
+.animate-dropdown {
+  animation: dropdown 200ms ease-in-out;
 }
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+dialog::backdrop{
+  background: var(--gray-900);
+  opacity: .5;
+}
+
+.delete-button{
+  background-color: var(--red);
+  color:white;
+  padding:1rem;
+  border-radius: 10px;
 }
 
 
@@ -77,8 +110,24 @@
     --accent:#277C78;
   }
 }
+
 header a.active svg path{
-  fill: var(--turquoise);
+  fill: var(--green)
+}
+@media (max-width:768px){
+
+  header a{
+    border-bottom:4px solid transparent;
+  }
+  header a.active{
+    border-bottom:4px solid var(--green);
+  
+  }
+}
+@media (min-width:701px){
+  header a.active{
+    border-left:4px solid var(--green);
+  }
 }
 /*---------RESETS---------*/
 
@@ -86,7 +135,10 @@ header a.active svg path{
 *, *::before, *::after {
   box-sizing: border-box;
 }
-
+header nav ul svg{
+  width: 25px;
+  height: 25px;
+}
 /* 2. Remove default margin */
 * {
   margin: 0;
@@ -97,6 +149,9 @@ body {
   line-height: 1.5;
   /* 4. Improve text rendering */
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display:flex;
+  width: 100%;
 }
 
 /* 5. Improve media defaults */
@@ -108,6 +163,12 @@ img, picture, video, canvas, svg {
 /* 6. Inherit fonts for form controls */
 input, button, textarea, select {
   font: inherit;
+}
+select{
+  -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    background: url('../../public/assets/images/icon-caret-down.svg') no-repeat right .75rem center;
 }
 
 /* 7. Avoid text overflows */
@@ -128,4 +189,29 @@ h1, h2, h3, h4, h5, h6 {
 */
 #root, #__next {
   isolation: isolate;
+}
+
+select, input{
+  padding:.75rem 1.25rem;
+  border: 1px solid var(--beige-500);
+  border-radius: 10px;
+  @apply text-[14px] leading-[150%] font-normal;
+}
+label{
+  @apply text-[12px] leading-[150%] font-bold;
+  color:var(--gray-500);
+  padding:.5rem 0;
+}
+button[type="submit"]{
+  width: 100%;
+  background-color: var(--gray-900);
+  color:white;
+  padding:1rem;
+  margin:1rem 0;
+  border-radius: 10px;
+  @apply text-[12px] leading-[150%] font-bold;
+  transition: all 200ms ease-in-out;
+}
+button[type="submit"]:hover{
+  background-color: var(--gray-500);
 }
