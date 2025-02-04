@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "./app/lib/session";
 
-const publicRoute = ["/", "/login", "/sign-up"];
-const protectedRoute = ["/profile"];
+const publicRoute = [ "/login", "/sign-up"];
+const protectedRoute = ["/","/profile"];
 
 export default async function middleware(req) {
   const path = req.nextUrl.pathname;
