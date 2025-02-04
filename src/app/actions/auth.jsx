@@ -43,6 +43,7 @@ export async function signup(state, formData) {
   console.log(savedUser);
 
   createSession(savedUser.id);
+  return redirect("/login");
 }
 
 export async function signin(state, formData) {
@@ -84,5 +85,5 @@ export async function signin(state, formData) {
 
   createSession(user.id);
 
-  redirect("/");
+  return redirect("/");
 }

@@ -6,11 +6,13 @@ import { deleteBudget } from "@/app/actions/bugets";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const Budget = ({ id, category, maxSpend, colorPref }) => {
-    
   const queryClient = useQueryClient();
   const editModalRef = useRef(null);
   const deleteModalRef = useRef(null);
-  
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    deleteMutation.mutate(id);
+  };
   const closeModal = (modal) => {
     modal.current?.close();
   };
@@ -20,7 +22,7 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
       queryClient.invalidateQueries(["budgets"]); // Refresh budgets list
     },
   });
-  
+
   return (
     <div key={id} className="bg-white p-6 rounded-xl shadow-lg">
       <h1 className="preset-1">{category}</h1>
@@ -35,7 +37,7 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
           Edit
         </button>
         <button
-            type="button"
+          type="button"
           onClick={() => deleteModalRef.current?.showModal()}
           className="bg-red-600 text-white py-2 px-4 rounded-xl"
         >
@@ -60,7 +62,7 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
       >
         <DeleteBudget
           category={category}
-          handleDelete={(e) => handleDelete(e,id)}
+          handleDelete={(e) => handleDelete(e, id)}
           closeModal={() => closeModal(deleteModalRef)}
         />
       </ModalComponent>
