@@ -47,6 +47,7 @@ export async function signup(state, formData) {
 }
 
 export async function signin(state, formData) {
+ 
   // check the cookies if the user exists inside the cookies
   // if the user exists, then return the user
   // if the user does not exist, then return an error

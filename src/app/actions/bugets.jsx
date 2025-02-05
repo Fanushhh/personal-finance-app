@@ -36,7 +36,7 @@ export const createBudget = async (state, formData) => {
     maxSpend,
     colorPref,
   });
-  const savedBudget = await budget.save();
+  await budget.save();
   return {
     success: true,
     message: "Budget added successfully",

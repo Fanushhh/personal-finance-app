@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 
 @font-face{
@@ -140,9 +138,7 @@ header nav ul svg{
   height: 25px;
 }
 /* 2. Remove default margin */
-* {
-  margin: 0;
-}
+
 
 body {
   /* 3. Add accessible line-height */

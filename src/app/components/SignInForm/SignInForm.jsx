@@ -5,7 +5,7 @@ import { signin } from "@/app/actions/auth";
 export const maxDuration = 60; // Applies to the actions
 
 export default function SignInForm() {
-  const [state, action, pending] = useActionState(signin, undefined);
+  const [state, action, isPending] = useActionState(signin, undefined);
 
   return (
     <div className="max-[1200px]:w-full w-2/3 flex items-center justify-center">
@@ -32,12 +32,12 @@ export default function SignInForm() {
           type="submit"
           className="bg-[var(--gray-900)] text-white py-4 rounded-xl mt-2 hover:bg-[var(--gray-500)] transition-colors ease-in-out"
         >
-          Login
+          { isPending ? <img src="./assets/images/loading.svg" alt="loading" className="w-10 mx-auto" /> : "Login"}
         </button>
         <p className="mt-4 text-center text-[var(--gray-500)]">
           Need to create an account?{" "}
           <Link href="/sign-up" className="text-black underline">
-            Sign Up
+          Sign Up
           </Link>
         </p>
       </form>

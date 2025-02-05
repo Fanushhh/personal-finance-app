@@ -26,6 +26,24 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    budgets: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Budget",
+      },
+    ],
+    transactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Transaction",
+      },
+    ],
+    pots:[
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Pot"
+      }
+    ]
   },
   { timestamps: true }
 );
