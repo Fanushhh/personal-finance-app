@@ -5,23 +5,11 @@ import { createSession } from "../lib/session";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import User from "../models/User";
-import { createClient } from 'redis';
-const { REDIS_PASS, REDIS_URI, REDIS_PORT } = process.env;
+import {getRedisClient} from "../lib/redis";
 
-const client = createClient({
-    username: 'default',
-    password: process.env.REDIS_PASS,
-    socket: {
-        host: process.env.REDIS_URI,
-        port: process.env.REDIS_PORT
-    }
-});
-client.on('error', err => console.log('Redis Client Error', err));
-
-await client.connect();
 
 export async function signup(state, formData) {
-  
+  const client = await getRedisClient();
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get("username"),
@@ -62,16 +50,17 @@ export async function signup(state, formData) {
     email: user.email,
     password: user.password
   } );
-  client.disconnect();
+ 
   const savedUser = await user.save();
   
 
   createSession(savedUser.id);
+  
   return redirect("/login");
 }
 
 export async function signin(state, formData) {
-  
+  const client = await getRedisClient();
   
   const result  = LoginFormSchema.safeParse({
     email: formData.get("email"),
@@ -84,7 +73,8 @@ export async function signin(state, formData) {
     };
   }
   const cachedUser = await client.hGetAll(`user:${result.data.email}`);
-  if(cachedUser){
+  
+  if(Object.getPrototypeOf(cachedUser) !== null){
     console.log('caching is called')
     const wrongPassword = !(await bcrypt.compare(
       result.data.password,
@@ -97,22 +87,30 @@ export async function signin(state, formData) {
         },
       };
     }
-    client.disconnect();
+    
     createSession(cachedUser.id);
+    
     return redirect("/");
     
   }else{
     console.log('caching is not called')
     await connectDB();
     const user = await User.findOne({ email: result.data.email });
+    if(!user){
+      return {
+        errors: {
+          email: "There is no account with this email",
+        },
+      };
+    }
     const wrongPassword = !(await bcrypt.compare(
       result.data.password,
       user.password
     ));
-    if (!user || wrongPassword) {
+    if (wrongPassword) {
       return {
         errors: {
-          generalError: "Incorrect email or password",
+          password: "Incorrect password",
         },
       };
     }
