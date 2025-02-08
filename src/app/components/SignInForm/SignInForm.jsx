@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { signin } from "@/app/actions/auth";
 export const maxDuration = 60; // Applies to the actions
 
 export default function SignInForm() {
+ 
   const [state, action, isPending] = useActionState(signin, undefined);
 
   return (
@@ -28,6 +29,7 @@ export default function SignInForm() {
         {state?.errors?.password && (
           <p className="text-red-500">{state.errors.password}</p>
         )}
+        {state?.errors?.generalError && <p className="text-red-500">{state.errors.generalError}</p>}
         <button
           type="submit"
           className="bg-[var(--gray-900)] text-white py-4 rounded-xl mt-2 hover:bg-[var(--gray-500)] transition-colors ease-in-out"

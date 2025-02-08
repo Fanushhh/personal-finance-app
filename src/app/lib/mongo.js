@@ -8,8 +8,11 @@ let cached = global.mongoose || { conn: null, promise: null };
 
 
 export const connectDB = async () => {
+  console.log("Connecting to DB");
+  
   if (cached.conn) return cached.conn;
-
+  console.log("No cached connection, creating new connection");
+  
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, {
       maxPoolSize: 10, // Set the max connection pool size

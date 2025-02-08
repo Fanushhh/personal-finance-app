@@ -9,6 +9,7 @@ export const ModalComponent = ({ ref, closeModal, children }) => {
           alt="close button"
           className="w-6 h-6"
           src="./assets/images/icon-close-modal.svg"
+          loading="lazy"
         />
         </button>
      
