@@ -74,7 +74,7 @@ export async function signin(state, formData) {
   }
   const cachedUser = await client.hGetAll(`user:${result.data.email}`);
   
-  if(Object.getPrototypeOf(cachedUser) !== null){
+  if(cachedUser.email){
     console.log('caching is called')
     const wrongPassword = !(await bcrypt.compare(
       result.data.password,
