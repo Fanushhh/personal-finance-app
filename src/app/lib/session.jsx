@@ -60,3 +60,9 @@ export async function deleteSession(){
   cookieStore.delete('session');
   redirect('/login')
 }
+export async function getSession(){
+  const session = (await cookies()).get('session')?.value;
+  const payload = await decrypt(session);
+  if(!payload || !session) return null;
+  return payload;
+}

@@ -1,9 +1,12 @@
 "use server";
 import { BudgetValidationSchema } from "../lib/definitions";
 import { connectDB } from "../lib/mongo";
+import { getSession } from "../lib/session";
 import Budget from "../models/Budget.js";
 
 export const createBudget = async (state, formData) => {
+  const { userId } = await getSession();
+  console.log(userId)
   const validatedFields = BudgetValidationSchema.safeParse({
     budgetCategory: formData.get("budgetCategory"),
     maxSpend: formData.get("maxSpend"),
@@ -23,7 +26,7 @@ export const createBudget = async (state, formData) => {
   const { budgetCategory, maxSpend, colorPref } = validatedFields.data;
   await connectDB();
 
-  const budgetExists = await Budget.findOne({ budgetCategory });
+  const budgetExists = await Budget.findOne({user:userId, budgetCategory});
   if (budgetExists) {
     return res.status(400).json({
       success: false,
@@ -32,6 +35,7 @@ export const createBudget = async (state, formData) => {
   }
   const budget = await Budget.create({
     id: crypto.randomUUID(),
+    user: userId,
     budgetCategory,
     maxSpend,
     colorPref,
@@ -80,9 +84,12 @@ export const editBudget = async ( state, formData) => {
 };
 
 export const getBugets = async () => {
+  const {userId} = await getSession();
+  
   await connectDB();
-  const budgets = await Budget.find({});
-  return JSON.parse(JSON.stringify(budgets));
+  const userBudgets = await Budget.find({user:userId});
+  console.log(userBudgets)
+  return JSON.parse(JSON.stringify(userBudgets));
 };
 
 export const deleteBudget = async (id) => {

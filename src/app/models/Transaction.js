@@ -4,7 +4,7 @@ import mongoose, {Schema} from "mongoose";
 
 
 const TransactionSchema = new Schema({
-    author:{
+    user:{
         type: Schema.Types.ObjectId,
         ref: 'User',
     },

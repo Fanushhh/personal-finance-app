@@ -4,7 +4,7 @@
 import mongoose, {Schema} from "mongoose";
 
 const PotsSchema = new Schema({
-    author:{
+    user:{
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
@@ -27,6 +27,6 @@ const PotsSchema = new Schema({
 
 });
 
-const Pot = mongoose.models.Pot || mongoose.model('Pot', PotSchema);
+const Pot = mongoose.models.Pot || mongoose.model('Pot', PotsSchema);
 
 export default Pot;

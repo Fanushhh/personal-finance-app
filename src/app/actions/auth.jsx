@@ -5,11 +5,12 @@ import { createSession } from "../lib/session";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import User from "../models/User";
-import {getRedisClient} from "../lib/redis";
-
+import { getRedisClient } from "../lib/redis";
 
 export async function signup(state, formData) {
+
   const client = await getRedisClient();
+
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get("username"),
@@ -28,9 +29,12 @@ export async function signup(state, formData) {
   const { name, email, password } = validatedFields.data;
   const hashedPassword = await bcrypt.hash(password, 10);
   // Call the provider or db to create a user...
-
+  console.time("mongodb connect");
   await connectDB();
+  console.timeEnd("mongodb connect");
+  console.time("find user");
   const userExists = await User.findOne({ email });
+  
   if (userExists) {
     return {
       errors: {
@@ -38,44 +42,50 @@ export async function signup(state, formData) {
       },
     };
   }
+  
+  console.timeEnd("find user");
+  console.time("create user");
   const user = await User.create({
-    id: crypto.randomUUID(),
     name,
     email,
     password: hashedPassword,
   });
+  console.timeEnd("create user");
+  console.time("Redis set");
+  console.log(user._id)
   await client.hSet(`user:${user.email}`, {
-    id: user.id,
+    id: user._id.toString(),
     name: user.name,
     email: user.email,
-    password: user.password
-  } );
- 
+    password: user.password,
+  });
+  console.timeEnd("Redis set");
+  console.time("save user");
   const savedUser = await user.save();
-  
+  console.timeEnd("save user");
 
-  createSession(savedUser.id);
-  
+  createSession(savedUser._id);
+
   return redirect("/login");
 }
 
 export async function signin(state, formData) {
   const client = await getRedisClient();
-  
-  const result  = LoginFormSchema.safeParse({
+
+  const result = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
   });
-  
+
   if (!result.success) {
     return {
       errors: result.error.flatten().fieldErrors,
     };
   }
   const cachedUser = await client.hGetAll(`user:${result.data.email}`);
-  
-  if(cachedUser.email){
-    console.log('caching is called')
+
+  if (cachedUser.email) {
+    console.log("caching is called");
     const wrongPassword = !(await bcrypt.compare(
       result.data.password,
       cachedUser.password
@@ -87,16 +97,15 @@ export async function signin(state, formData) {
         },
       };
     }
-    
+
     createSession(cachedUser.id);
-    
+
     return redirect("/");
-    
-  }else{
-    console.log('caching is not called')
+  } else {
+    console.log("caching is not called");
     await connectDB();
     const user = await User.findOne({ email: result.data.email });
-    if(!user){
+    if (!user) {
       return {
         errors: {
           email: "There is no account with this email",
@@ -114,11 +123,9 @@ export async function signin(state, formData) {
         },
       };
     }
-  
-    createSession(user.id);
-  
+
+    createSession(user._id);
+
     return redirect("/");
-    
   }
-  
 }

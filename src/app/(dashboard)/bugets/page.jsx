@@ -1,7 +1,6 @@
 
 import { getBugets } from "@/app/actions/bugets";
 import { BudgetHeader } from "@/app/components/BugetHeader/BudgetHeader";
-import { deleteBudget } from "@/app/actions/bugets";
 import BudgetList from "@/app/components/BudgetList/BudgetList";
 
 

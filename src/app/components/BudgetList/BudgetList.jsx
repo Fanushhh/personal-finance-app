@@ -1,9 +1,8 @@
 "use client"; // Needed for hooks in Next.js
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getBugets, deleteBudget } from "@/app/actions/bugets";
+import { useQuery } from "@tanstack/react-query";
+import { getBugets } from "@/app/actions/bugets";
 
-import { useRef } from "react";
 import { Budget } from "../Budget/Budget";
 export default function BudgetList() {
   // Fetch budgets using useQuery

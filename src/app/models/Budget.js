@@ -3,6 +3,10 @@ import mongoose, {Schema} from "mongoose";
 
 
 const BudgetSchema = new Schema({
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:'User',
+    },
     id: {
         type:String,
         unique:true,
