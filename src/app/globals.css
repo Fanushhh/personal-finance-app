@@ -65,24 +65,7 @@ input{
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-dialog::backdrop{
-  background: var(--gray-900);
-  opacity: .5;
-}
-
-.delete-button{
-  background-color: var(--red);
-  color:white;
-  padding:1rem;
-  border-radius: 10px;
-}
-
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --gray-900: #201F24;
+  --gray-900: #201F24;
     --gray-500: #696868;
     --gray-300: #B3B3B3;
     --gray-100: #F2F2F2;
@@ -104,8 +87,26 @@ dialog::backdrop{
     --army-green:#7F9161;
     --gold:#CAB361;
     --orange:#BE6C49;
-    
     --accent:#277C78;
+    
+}
+dialog::backdrop{
+  background: var(--gray-900);
+  opacity: .5;
+}
+
+.delete-button{
+  background-color: var(--red);
+  color:white;
+  padding:1rem;
+  border-radius: 10px;
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    
   }
 }
 
