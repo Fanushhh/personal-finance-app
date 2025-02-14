@@ -46,6 +46,7 @@ input{
   }
   
 }
+
 @keyframes dropdown {
   0% {
     scale: 0;
@@ -88,11 +89,27 @@ input{
     --gold:#CAB361;
     --orange:#BE6C49;
     --accent:#277C78;
-    
+
 }
 dialog::backdrop{
   background: var(--gray-900);
   opacity: .5;
+}
+.donut{
+  aspect-ratio: 1;
+  background-image:
+  radial-gradient(
+    var(--white) 45%,
+    transparent 0 70%,
+    var(--white) 100%
+  ),
+  conic-gradient(
+    from 30deg,
+    var(--green) 25%,
+    var(--cyan) 0 40%,
+    var(--yellow) 0 67%,
+    var(--red) 0 
+  )
 }
 
 .delete-button{
@@ -102,13 +119,6 @@ dialog::backdrop{
   border-radius: 10px;
 }
 
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    
-  }
-}
 
 header a.active svg path{
   fill: var(--green)
@@ -139,7 +149,9 @@ header nav ul svg{
   height: 25px;
 }
 /* 2. Remove default margin */
-
+button{
+  cursor: pointer;
+}
 
 body {
   /* 3. Add accessible line-height */
@@ -158,7 +170,7 @@ img, picture, video, canvas, svg {
 }
 
 /* 6. Inherit fonts for form controls */
-input, button, textarea, select {
+input, textarea, select {
   font: inherit;
 }
 select{
@@ -187,6 +199,7 @@ h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
 
 select, input{
   padding:.75rem 1.25rem;

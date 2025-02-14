@@ -56,6 +56,9 @@ export default function Navigation() {
                 icon="iconNavRecurring"
               ></NavButton>
             </li>
+            <li>
+              <button className="text-white bg-red" onClick={() => deleteSession()}>Logout</button>
+            </li>
           </ul>
         </nav>
       </header>
@@ -111,6 +114,9 @@ export default function Navigation() {
               {minimized ? "" : "Recurring Bills"}
             </NavButton>
           </li>
+          <li>
+              <button className="text-white bg-red" onClick={() => deleteSession()}>Logout</button>
+            </li>
         </ul>
       </nav>
       <button onClick={() => deleteSession()}>Logout</button>

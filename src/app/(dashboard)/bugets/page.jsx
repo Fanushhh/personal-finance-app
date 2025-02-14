@@ -1,18 +1,22 @@
 
-import { getBugets } from "@/app/actions/bugets";
+
 import { BudgetHeader } from "@/app/components/BugetHeader/BudgetHeader";
 import BudgetList from "@/app/components/BudgetList/BudgetList";
+import { DonutChart } from "@/app/components/DonutChart/DonutChart";
 
 
 export default async function Page() {
-  const bugets = await getBugets();
+  
   
 
   return (
     
-      <div className=" flex p-6">
+      <div className=" flex w-full flex-col p-6">
         <BudgetHeader />
-        <BudgetList />
+        <div>
+          <DonutChart />
+          <BudgetList />
+        </div>
       </div>
       
     

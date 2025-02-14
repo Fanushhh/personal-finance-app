@@ -1,6 +1,6 @@
 'use server'
 import { SignJWT, jwtVerify } from 'jose'
-import { redirect } from 'next/dist/server/api-utils'
+import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -58,7 +58,7 @@ export async function updateSession(){
 export async function deleteSession(){
   const cookieStore = await cookies();
   cookieStore.delete('session');
-  redirect('/login')
+  return redirect('/login')
 }
 export async function getSession(){
   const session = (await cookies()).get('session')?.value;
