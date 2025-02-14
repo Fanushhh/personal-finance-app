@@ -63,6 +63,9 @@ input{
 .animate-dropdown {
   animation: dropdown 200ms ease-in-out;
 }
+@theme{
+  
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -96,20 +99,8 @@ dialog::backdrop{
   opacity: .5;
 }
 .donut{
-  aspect-ratio: 1;
-  background-image:
-  radial-gradient(
-    var(--white) 45%,
-    transparent 0 70%,
-    var(--white) 100%
-  ),
-  conic-gradient(
-    from 30deg,
-    var(--green) 25%,
-    var(--cyan) 0 40%,
-    var(--yellow) 0 67%,
-    var(--red) 0 
-  )
+  filter: blur(0.5px);
+
 }
 
 .delete-button{
