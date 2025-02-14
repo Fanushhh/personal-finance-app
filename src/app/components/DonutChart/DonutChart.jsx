@@ -1,41 +1,54 @@
-'use client'
+"use client";
 
-import { getBugets } from "@/app/actions/bugets"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { getBugets } from "@/app/actions/bugets";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 export const DonutChart = () => {
-    const {data, isLoading, isError} = useQuery({
-        queryKey: ['budgets'],
-        queryFn: getBugets,
-    });
-    const colors = data?.map(budget => budget.colorPref);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["budgets"],
+    queryFn: getBugets,
+  });
+  const colors = data?.map((budget) => budget.colorPref);
 
-    console.log(colors);
-    const totalAmount = data?.reduce((acc, budget) => acc + Number(budget.maxSpend), 0);
-    console.log(totalAmount);
-    
-    
-   
+  console.log(colors);
+  const totalAmount = data?.reduce(
+    (acc, budget) => acc + Number(budget.maxSpend),
+    0
+  );
+  console.log(totalAmount);
+  const budgetProcentages = data?.map((budget) => {
+    return {
+      procentage: Math.round((Number(budget.maxSpend) / totalAmount) * 100),
+      color: budget.colorPref,
+    };
+  });
+  budgetProcentages?.sort((a, b) => b - a);
+  let conicGradient = "";
+  let currentPercentage = 0; // Track accumulated percentage
 
-    
-    
-    
-    // create a gradient based on the colors in budgets
-    // for each budget we add a new color in the cradient
-    // that color stop and end  should be determined by the amount
-    // the total amount is the sum of all budgets
-    // budget circle size should be calculated based of the procentage of the total amount
-    // if a bill budget has 600 out of the total of 1000 that contains other budgets, 
-    // that makes up for 60% of the circle
-    // biggest procentage should be the first one
+  budgetProcentages?.forEach((budget, index) => {
+    const nextPercentage = currentPercentage + budget.procentage;
 
+    if (index === budgetProcentages.length - 1) {
+      // Last item, no comma at the end
+      conicGradient += `var(--${budget.color}) ${currentPercentage}% ${nextPercentage}%`;
+    } else {
+      conicGradient += `var(--${budget.color}) ${currentPercentage}% ${nextPercentage}%,`;
+    }
 
-    
+    currentPercentage = nextPercentage;
+  });
+  console.log(conicGradient);
 
-    return(
-        <figure className="flex flex-col justify-center max-w-full ">
-            <div className={`size-60 rounded-full bg-[radial-gradient(white_45%,transparent_0_70%,white_100%),conic-gradient()]`}></div>
+  const gradientStyles = {
+    background: `radial-gradient(var(--white) 45%,transparent 0% 70%, var(--white) 70% 100%),conic-gradient(from 30deg,${conicGradient})`,
+  };
+  console.log(gradientStyles);
 
-            <figcaption>Budgets</figcaption>
-        </figure>
-    )
-}
+  return (
+    <figure className="flex flex-col justify-center max-w-full ">
+      <div style={gradientStyles} className={`size-60 rounded-full}`}></div>
+
+      <figcaption>Budgets</figcaption>
+    </figure>
+  );
+};
