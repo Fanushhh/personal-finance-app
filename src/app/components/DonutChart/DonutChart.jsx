@@ -23,9 +23,12 @@ export const DonutChart = () => {
   let accumulatedPercentage = 0;
 
   return (
-    <figure className="flex flex-col max-w-[400px]">
+    <figure className="flex max-[600px]:flex-col p-6 lg:flex-col gap-8 lg:max-w-[400px] items-center max-[1000px]:justify-evenly">
       {/* SVG Donut Chart */}
-      <svg width="300" height="300" viewBox="0 0 200 200" className="mx-auto mb-10">
+      <svg
+        viewBox="0 0 200 200"
+        className="lg:mx-auto my-10 w-[240px] h-[240px] "
+      >
         {/* Background Circle */}
         <circle
           cx="100"
@@ -39,7 +42,9 @@ export const DonutChart = () => {
         {/* Dynamic Budget Segments */}
         {data?.map((budget, index) => {
           const percentage = Number(budget.maxSpend) / totalAmount;
-          const strokeDasharray = `${percentage * circumference} ${circumference}`;
+          const strokeDasharray = `${
+            percentage * circumference
+          } ${circumference}`;
           const strokeDashoffset = -accumulatedPercentage * circumference;
           accumulatedPercentage += percentage; // Move to next segment
 
@@ -50,7 +55,7 @@ export const DonutChart = () => {
               cy="100"
               r={radius}
               fill="none"
-              stroke={budget.colorPref}
+              stroke={`var(--${budget.colorPref})`}
               strokeWidth={thickness}
               strokeDasharray={strokeDasharray}
               strokeDashoffset={strokeDashoffset}
@@ -74,19 +79,22 @@ export const DonutChart = () => {
       </svg>
 
       {/* Legend */}
-      <figcaption className="flex flex-col gap-4 mt-4 ">
+      <figcaption className="w-full flex flex-col gap-4 mt-4 ">
         <p className="preset-2">Spending summary</p>
         {data?.map((budget) => (
-          <span
+          <div
             key={budget._id}
-            className="relative flex items-center gap-2"
+            className="preset-4 flex justify-between w-full"
           >
-            <span
-              className="w-1 h-4 rounded-2xl"
-              style={{ backgroundColor: budget.colorPref }}
-            ></span>
-            {budget.budgetCategory}
-          </span>
+            <div className="relative flex items-center gap-2">
+              <span
+                className="inline-block w-1 h-4 rounded-2xl"
+                style={{ backgroundColor: `var(--${budget.colorPref})` }}
+              ></span>
+              <p>{budget.budgetCategory}</p>
+            </div>
+            <span>${budget.maxSpend}</span>
+          </div>
         ))}
       </figcaption>
     </figure>

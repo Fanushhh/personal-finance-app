@@ -17,7 +17,7 @@ export default function Navigation() {
         className={`bg-black pt-3  ease-in-out transition-all
       ${minimized ? "w-[100px]" : "w-[300px]"} 
       min-[769px]:min-h-screen 
-      max-[768px]:fixed max-[768px]:bottom-0 max-[768px]:right-0 max-[768px]:w-full min-[769px]:hidden`}
+      max-[768px]:fixed z-10 max-[768px]:bottom-0 max-[768px]:right-0 max-[768px]:w-full min-[769px]:hidden`}
       >
         <nav>
           <ul className=" flex justify-evenly px-4 items-center">
@@ -30,15 +30,15 @@ export default function Navigation() {
             </li>
             <li>
               <NavButton
-                href="/transations"
-                selected={selected("/transations")}
+                href="/transactions"
+                selected={selected("/transactions")}
                 icon="iconTransactions"
               ></NavButton>
             </li>
             <li>
               <NavButton
-                href="/bugets"
-                selected={selected("/bugets")}
+                href="/budgets"
+                selected={selected("/budgets")}
                 icon="iconNavBugets"
               ></NavButton>
             </li>
@@ -80,8 +80,8 @@ export default function Navigation() {
           </li>
           <li>
             <NavButton
-              href="/transations"
-              selected={selected("/transations")}
+              href="/transactions"
+              selected={selected("/transactions")}
               icon="iconTransactions"
             >
               {minimized ? "" : "Transactions"}
@@ -89,11 +89,11 @@ export default function Navigation() {
           </li>
           <li>
             <NavButton
-              href="/bugets"
-              selected={selected("/bugets")}
+              href="/budgets"
+              selected={selected("/budgets")}
               icon="iconNavBugets"
             >
-              {minimized ? "" : "Bugets"}
+              {minimized ? "" : "Budgets"}
             </NavButton>
           </li>
           <li>

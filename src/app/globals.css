@@ -63,9 +63,7 @@ input{
 .animate-dropdown {
   animation: dropdown 200ms ease-in-out;
 }
-@theme{
-  
-}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -152,6 +150,8 @@ body {
   min-height: 100vh;
   display:flex;
   width: 100%;
+  font-size:16px;
+  
 }
 
 /* 5. Improve media defaults */
@@ -179,6 +179,7 @@ p, h1, h2, h3, h4, h5, h6 {
 /* 8. Improve line wrapping */
 p {
   text-wrap: pretty;
+  font-size:16px;
 }
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
@@ -196,7 +197,7 @@ select, input{
   padding:.75rem 1.25rem;
   border: 1px solid var(--beige-500);
   border-radius: 10px;
-  @apply text-[14px] leading-[150%] font-normal;
+  @apply text-[16px] leading-[150%] font-normal;
 }
 label{
   @apply text-[12px] leading-[150%] font-bold;
@@ -215,4 +216,20 @@ button[type="submit"]{
 }
 button[type="submit"]:hover{
   background-color: var(--gray-500);
+}
+.custom-after-bg {
+  position: relative;
+}
+
+.custom-after-bg::after {
+  content: '';
+  background-image: url('/assets/images/icon-caret-right.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 10px;
+  position:absolute;
+  top:8px;
+  
+  margin-left: 0.5rem; /* Adjust as needed */
 }

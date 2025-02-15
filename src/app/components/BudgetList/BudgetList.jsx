@@ -19,8 +19,8 @@ export default function BudgetList() {
   if (error) return <p>Error loading budgets</p>;
 
   return (
-    <div className="flex p-6">
-      <div>
+    <div className="flex p-0 md:p-10 w-full flex-col gap-6">
+      
         {budgets.map((budget) => (
           <Budget
             key={budget.id}
@@ -30,7 +30,7 @@ export default function BudgetList() {
             colorPref={budget.colorPref}
           />
         ))}
-      </div>
+      
     </div>
   );
 }

@@ -8,7 +8,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        
+        navy:"#626070",
+        red:"#C94736",
+        purple:"#826CB0",
+        cyan:"#82C9D7",
+        yellow:"#F2CDAC",
+        blue:"3F82B2",
+        magenta:"#934F6F",
+        green:"277C78",
+        turquoise:"#597C7C",
+        orange:"#BE6C49",
       },
     },
     

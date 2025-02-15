@@ -11,9 +11,9 @@ export default async function Page() {
 
   return (
     
-      <div className=" flex w-full flex-col p-6">
+      <div className=" flex w-full flex-col px-4 py-6 md:p-10 max-[600px]:mb-10">
         <BudgetHeader />
-        <div>
+        <div className="flex gap-10 flex-col lg:flex-row">
           <DonutChart />
           <BudgetList />
         </div>

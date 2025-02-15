@@ -17,7 +17,7 @@ export const BudgetHeader = () => {
         <div className="flex w-full justify-between items-center">
             <h1 className="preset-1">Budgets</h1>   
             <div className="flex gap-4">
-                <button className="bg-black  text-white py-4 px-6 font-bold rounded-md" onClick={() => openModal(modalRef)}>+ Add New Budget</button>
+                <button className="bg-black text-white py-4 px-6 rounded-md preset-4-bold" onClick={() => openModal(modalRef)}>+ Add New Budget</button>
                 
             </div>
             <ModalComponent ref={modalRef} closeModal={() => closeModal(modalRef)}>
