@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "./app/lib/session";
+import { isSessionExpiring, updateSession } from "./app/lib/session";
 
 const publicRoute = [ "/login", "/sign-up"];
 const protectedRoute = ["/profile"];
@@ -13,6 +14,12 @@ export default async function middleware(req) {
   const cookie = (await cookies())?.get("session")?.value;
 
   const session = await decrypt(cookie);
+  const isSessionExpiringSoon = await isSessionExpiring(session?.expiresAt, 1440);
+  console.log(isSessionExpiringSoon)
+  if (isSessionExpiringSoon) {
+    await updateSession();
+    return NextResponse.next();
+  }
   if (path === "/" && session?.userId) {
     return NextResponse.next(); // Allow access to "/" for authenticated users
   }

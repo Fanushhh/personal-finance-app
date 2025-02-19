@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ModalComponent } from "../Modals/ModalComponent";
 import { EditBudgetForm } from "../Forms/EditBudgetForm";
 import { DeleteBudget } from "../Forms/DeleteBudget";
@@ -27,6 +27,7 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
     },
   });
   const progressWidth = (spent / maxSpend) * 100;
+  
   
 
   return (

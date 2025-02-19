@@ -8,7 +8,6 @@ import User from "../models/User";
 import { getRedisClient } from "../lib/redis";
 
 export async function signup(state, formData) {
-
   const client = await getRedisClient();
 
   // Validate form fields
@@ -34,7 +33,7 @@ export async function signup(state, formData) {
   console.timeEnd("mongodb connect");
   console.time("find user");
   const userExists = await User.findOne({ email });
-  
+
   if (userExists) {
     return {
       errors: {
@@ -42,7 +41,7 @@ export async function signup(state, formData) {
       },
     };
   }
-  
+
   console.timeEnd("find user");
   console.time("create user");
   const user = await User.create({
@@ -52,7 +51,7 @@ export async function signup(state, formData) {
   });
   console.timeEnd("create user");
   console.time("Redis set");
-  console.log(user._id)
+  console.log(user._id);
   await client.hSet(`user:${user.email}`, {
     id: user._id.toString(),
     name: user.name,

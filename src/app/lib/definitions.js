@@ -28,3 +28,9 @@ export const BudgetValidationSchema = z.object({
   maxSpend: z.string().min(1, { message: 'Please enter a valid amount' }),
   colorPref: z.string().min(2, { message: 'Please select a color' }),
 });
+
+export const PotValidationSchema = z.object({
+  potName: z.string().min(2, { message: 'Pot name cannot be empty' }),
+  target: z.string().min(1, { message: 'Please enter a valid amount' }),
+  colorPref: z.string().min(2, { message: 'Please select a color' }),
+});

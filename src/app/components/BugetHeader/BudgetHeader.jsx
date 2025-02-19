@@ -1,16 +1,10 @@
 'use client';
 
-import { useRef } from "react";
+import { useModal } from "@/app/hooks/useModal";
 import { ModalComponent } from "../Modals/ModalComponent";
 import { BudgetForm } from "../Forms/BudgetForm";
 export const BudgetHeader = () => {
-    const modalRef = useRef(null);
-    const openModal = (modal) => {
-        modal.current?.showModal();
-    }
-    const closeModal = (modal) => {
-        modal.current?.close();
-    }
+   const { modalRef, openModal, closeModal } = useModal();
     
     
     return(

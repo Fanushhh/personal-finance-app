@@ -21,31 +21,11 @@ input{
   border-radius: 10px;
 }
 
-
-@layer utilities{
-  .preset-1{
-    @apply text-[32px] leading-[120%] font-bold;
-  }
-  .preset-2{
-    @apply text-[20px] leading-[120%] font-bold;
-  }
-  .preset-3{
-    @apply text-[16px] leading-[150%] font-bold;
-  }
-  .preset-4{
-    @apply text-[14px] leading-[150%] font-normal;
-  }
-  .preset-4-bold{
-    @apply text-[14px] leading-[150%] font-bold;
-  }
-  .preset-5{
-    @apply text-[12px] leading-[150%] font-normal;
-  }
-  .preset-5-bold{
-    @apply text-[12px] leading-[150%] font-bold;
-  }
-  
+button:disabled{
+  background-color: var(--gray-500);
+  cursor: not-allowed;
 }
+
 
 @keyframes dropdown {
   0% {
@@ -179,7 +159,7 @@ p, h1, h2, h3, h4, h5, h6 {
 /* 8. Improve line wrapping */
 p {
   text-wrap: pretty;
-  font-size:16px;
+  
 }
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
@@ -232,4 +212,29 @@ button[type="submit"]:hover{
   top:8px;
   
   margin-left: 0.5rem; /* Adjust as needed */
+}
+
+@layer utilities{
+  .preset-1{
+    @apply text-[32px] leading-[120%] font-bold;
+  }
+  .preset-2{
+    @apply text-[20px] leading-[120%] font-bold;
+  }
+  .preset-3{
+    @apply text-[16px] leading-[150%] font-bold;
+  }
+  .preset-4{
+    @apply text-[14px] leading-[150%] font-normal;
+  }
+  .preset-4-bold{
+    @apply text-[14px] leading-[150%] font-bold;
+  }
+  .preset-5{
+    @apply text-[12px] leading-[150%] font-normal;
+  }
+  .preset-5-bold{
+    @apply text-[12px] leading-[150%] font-bold;
+  }
+  
 }

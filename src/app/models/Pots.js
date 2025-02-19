@@ -3,16 +3,12 @@
 
 import mongoose, {Schema} from "mongoose";
 
-const PotsSchema = new Schema({
+const PotSchema = new Schema({
     user:{
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    name:{
-        type:String,
-        required:true,
-    },
-    total:{
+    potName:{
         type:String,
         required:true,
     },
@@ -20,13 +16,17 @@ const PotsSchema = new Schema({
         type:String,
         required:true,
     },
-    theme:{
+    currentAmount:{
+        type:String,
+        required:true,
+    },
+    colorPref:{
         type:String,
         required:true,
     },
 
 });
 
-const Pot = mongoose.models.Pot || mongoose.model('Pot', PotsSchema);
+const Pot = mongoose.models.Pot || mongoose.model('Pot', PotSchema);
 
 export default Pot;

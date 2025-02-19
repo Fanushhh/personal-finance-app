@@ -45,7 +45,7 @@ export async function updateSession(){
     const payload = await decrypt(session);
     if(!payload || !session) return null;
 
-    const expires = new Date(Date.now + 7 * 24 * 60 * 60 * 1000);
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     (await cookies()).set('session', session, {
       httpOnly:true,
       secure:true,
@@ -63,6 +63,15 @@ export async function deleteSession(){
 export async function getSession(){
   const session = (await cookies()).get('session')?.value;
   const payload = await decrypt(session);
+  console.log(payload);
   if(!payload || !session) return null;
   return payload;
+}
+
+export const isSessionExpiring = async (expiresAt,thresholdInMinutes = 1440) => {
+  const expirationTime = new Date(expiresAt).getTime();
+  const currentTime = Date.now();
+  const timeRemaining = expirationTime - currentTime;
+  const threshholdMs = thresholdInMinutes * 60 * 1000;
+  return timeRemaining < threshholdMs;
 }

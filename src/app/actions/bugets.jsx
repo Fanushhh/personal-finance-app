@@ -88,6 +88,7 @@ export const getBugets = async () => {
   
   await connectDB();
   const userBudgets = await Budget.find({user:userId});
+  console.log(userBudgets)
   
   return JSON.parse(JSON.stringify(userBudgets));
 };

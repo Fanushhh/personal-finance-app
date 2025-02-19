@@ -16,7 +16,7 @@ const UserSchema = new Schema(
 
         "Email is invalid",
       ],
-    },
+    },    
     password: {
       type: String,
       required: true,

@@ -14,6 +14,7 @@ export default function BudgetList() {
     queryKey: ["budgets"],
     queryFn: getBugets,
   });
+  console.log(budgets)
 
   if (isLoading) return <p>Loading budgets...</p>;
   if (error) return <p>Error loading budgets</p>;
