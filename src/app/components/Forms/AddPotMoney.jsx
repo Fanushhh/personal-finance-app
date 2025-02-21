@@ -42,7 +42,7 @@ export const AddPotMoney = ({ potName,currentAmount,target,progressWidth, potId,
             <input type="hidden" name="potId" value={potId} />
                 <div className="flex flex-col gap-2 relative">
                     <label htmlFor="addedAmount">Amount to add</label>
-                    <input step="any" name="addedAmount" onChange={(e) => setAddedAmount(e.target.value)} defaultValue={addedAmount > currentAmount ? currentAmount : addedAmount} className="pl-8! relative" type="number"/>
+                    <input step="any" name="addedAmount" onChange={(e) => setAddedAmount(Number(e.target.value))} defaultValue={addedAmount > currentAmount ? currentAmount : addedAmount} className="pl-8! relative" type="number"/>
                     <span className="absolute left-4 top-[54px] text-(--gray-500)">$</span>
                 </div>
                 <button type="submit">Confirm addition</button>
