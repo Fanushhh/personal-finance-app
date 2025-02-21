@@ -4,14 +4,25 @@ import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
 import Budget from "../models/Budget.js";
 
+const initialState = {
+  budgetCategory: '',
+  maxSpend: '',
+  colorPref: '',
+  
+}
 export const createBudget = async (state, formData) => {
   const { userId } = await getSession();
-  console.log(userId)
+  
   const validatedFields = BudgetValidationSchema.safeParse({
     budgetCategory: formData.get("budgetCategory"),
     maxSpend: formData.get("maxSpend"),
     colorPref: formData.get("colorPref"),
   });
+  const parsedData = {
+    budgetCategory: formData.get("budgetCategory"),
+    maxSpend: formData.get("maxSpend"),
+    colorPref: formData.get("colorPref"),
+  }
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
@@ -19,6 +30,8 @@ export const createBudget = async (state, formData) => {
    // Throw an error that returns the messages from zod
     
    return{
+    ...state,
+    ...parsedData,
     success: false,
     message: validatedFields.error.flatten().fieldErrors,
    }
@@ -42,6 +55,7 @@ export const createBudget = async (state, formData) => {
   });
   await budget.save();
   return {
+    ...initialState,
     success: true,
     message: "Budget added successfully",
   };
@@ -88,7 +102,7 @@ export const getBugets = async () => {
   
   await connectDB();
   const userBudgets = await Budget.find({user:userId});
-  console.log(userBudgets)
+  
   
   return JSON.parse(JSON.stringify(userBudgets));
 };

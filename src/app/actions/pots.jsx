@@ -1,5 +1,5 @@
 "use server";
-import { PotValidationSchema } from "../lib/definitions";
+import { PotValidationSchema, AddMoneyValidationSchema, WithdrawMoneyValidationSchema } from "../lib/definitions";
 import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
 import Pot from "../models/Pots";
@@ -19,6 +19,7 @@ export const createPot = async (state, formData) => {
    // Throw an error that returns the messages from zod
     
    return{
+    ...state,
     success: false,
     message: validatedFields.error.flatten().fieldErrors,
    }
@@ -98,5 +99,56 @@ export const deletePot = async (id) => {
   return {
     isSuccess: true,
     message: "Pot deleted successfully",
+  }
+}
+
+export const addMoneyToPot = async (state, formData) => {
+  const validatedFields = AddMoneyValidationSchema.safeParse({
+    addedAmount: Number(formData.get("addedAmount")),
+  });
+  if(!validatedFields.success){
+    return{
+      success: false,
+      message: validatedFields.error.flatten().fieldErrors,
+    }
+  }
+  const { addedAmount } = validatedFields.data;
+  
+  const potId = formData.get("potId");
+  
+  await connectDB();
+  const pot = await Pot.findById(potId);
+  pot.currentAmount += Number(addedAmount);
+  
+  await pot.save();
+  return {
+    success: true,
+    message: "Money added successfully",
+  }
+}
+
+export const withdrawPotMoney = async (state, formData) => {
+  const validatedFields = WithdrawMoneyValidationSchema.safeParse({
+    withdrawnAmount: Number(formData.get("deductedAmount")),
+  });
+  if(!validatedFields.success){
+    return{
+      success: false,
+      message: validatedFields.error.flatten().fieldErrors,
+    }
+  }
+  const { withdrawnAmount } = validatedFields.data;
+  
+  
+  const potId = formData.get("potId");
+  
+  await connectDB();
+  const pot = await Pot.findById(potId);
+  pot.currentAmount -= withdrawnAmount;
+  
+  await pot.save();
+  return {
+    success: true,
+    message: "Money added successfully",
   }
 }

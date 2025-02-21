@@ -75,7 +75,7 @@ export const PotForm = ({closeModal}) => {
                         {!message?.success && <p className="text-red-500">{message?.message.colorPref}</p>}
                     </div>
                     
-                    <button type="submit" disabled={updatedColors.length >= 0}>Add Pot</button>
+                    <button type="submit" disabled={updatedColors.length === 0}>Add Pot</button>
                     
                 </form>
             </div>

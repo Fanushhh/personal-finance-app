@@ -6,20 +6,28 @@ import { deleteBudget } from "@/app/actions/bugets";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import Image from "next/image";
+import { EditActions } from "../EditActions/EditActions";
+import { useModal } from "@/app/hooks/useModal";
 
 export const Budget = ({ id, category, maxSpend, colorPref }) => {
   const queryClient = useQueryClient();
-  const editModalRef = useRef(null);
-  const deleteModalRef = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
+  const {
+    modalRef: editModalRef,
+    openModal: openEditModal,
+    closeModal: closeEditModal,
+  } = useModal();
+  const {
+    modalRef: deleteModalRef,
+    openModal: openDeleteModal,
+    closeModal: closeDeleteModal,
+  } = useModal();
   const spent = 25;
   const handleDelete = (e, id) => {
     e.preventDefault();
     deleteMutation.mutate(id);
   };
-  const closeModal = (modal) => {
-    modal.current?.close();
-  };
+
   const deleteMutation = useMutation({
     mutationFn: deleteBudget,
     onSuccess: () => {
@@ -27,29 +35,36 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
     },
   });
   const progressWidth = (spent / maxSpend) * 100;
-  
-  
 
   return (
     <div key={id} className="p-6 max-w-[600px] w-full relative">
       <div>
-        <Image width={20} height={20} onClick={() => setShowOptions(!showOptions)} className="cursor-pointer absolute top-8 right-6" src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+        <Image
+          width={20}
+          height={20}
+          onClick={() => setShowOptions(!showOptions)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setShowOptions(!showOptions); // Toggle options on Enter or Space
+            }
+          }}
+          tabIndex={0} // Makes it keyboard-focusable
+          role="button" // Announces it as a button for screen readers
+          aria-label="Open options menu"
+          className="cursor-pointer absolute top-8 right-6 focus:ring-2 focus:ring-blue-500"
+          src="./assets/images/icon-ellipsis.svg"
+          alt="Options menu"
+        />
       </div>
-      <div className={` absolute z-2 shadow-md p-2 rounded-md flex flex-col top-10 right-6 bg-white text-gray-900 ${showOptions === true ? 'flex' : 'hidden'} *:hover:bg-gray-100`}>
-      <button
-          onClick={() => editModalRef.current?.showModal()}
-          className="  py-2 px-4 rounded-xl"
-        >
-          Edit
-        </button>
-        <button
-          type="button"
-          onClick={() => deleteModalRef.current?.showModal()}
-          className="  py-2 px-4 rounded-xl"
-        >
-          {deleteMutation.isLoading ? "Deleting..." : "Delete"}
-        </button>
-      </div>
+      <EditActions
+        showOptions={showOptions}
+        closeActions={setShowOptions}
+        isLoading={deleteMutation.isLoading}
+        openEditModal={openEditModal}
+        openDeleteModal={openDeleteModal}
+        editModalRef={editModalRef}
+        deleteModalRef={deleteModalRef}
+      />
       <div>
         <h2 className="preset-2 flex items-center">
           <span
@@ -76,35 +91,39 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
           </p>
           <p className="preset-4 text-[var(--beige-500)]">
             Remaining:{" "}
-            <span className="preset-4-bold text-black">${maxSpend - spent}</span>
+            <span className="preset-4-bold text-black">
+              ${maxSpend - spent}
+            </span>
           </p>
         </div>
       </div>
       <div className={`flex justify-between items-center w-full`}>
         <h2 className="preset-3">Latest spending</h2>
-        <Link href="/transactions" className="custom-after-bg mr-2">See all</Link>
+        <Link href="/transactions" className="custom-after-bg mr-2">
+          See all
+        </Link>
       </div>
-      
+
       <ModalComponent
         ref={editModalRef}
-        closeModal={() => closeModal(editModalRef)}
+        closeModal={() => closeEditModal(editModalRef)}
       >
         <EditBudgetForm
           category={category}
           id={id}
           maxSpend={maxSpend}
           colorPref={colorPref}
-          closeModal={() => closeModal(editModalRef)}
+          closeModal={() => closeEditModal(editModalRef)}
         />
       </ModalComponent>
       <ModalComponent
         ref={deleteModalRef}
-        closeModal={() => closeModal(deleteModalRef)}
+        closeModal={() => closeDeleteModal(editModalRef)}
       >
         <DeleteBudget
           category={category}
           handleDelete={(e) => handleDelete(e, id)}
-          closeModal={() => closeModal(deleteModalRef)}
+          closeModal={() => closeDeleteModal(editModalRef)}
         />
       </ModalComponent>
     </div>

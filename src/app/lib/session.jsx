@@ -63,7 +63,7 @@ export async function deleteSession(){
 export async function getSession(){
   const session = (await cookies()).get('session')?.value;
   const payload = await decrypt(session);
-  console.log(payload);
+  
   if(!payload || !session) return null;
   return payload;
 }

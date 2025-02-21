@@ -8,6 +8,8 @@ import { useModal } from "@/app/hooks/useModal";
 import { EditPotForm } from "../Forms/EditPot";
 import { EditActions } from "../EditActions/EditActions";
 import { AddPotMoney } from "../Forms/AddPotMoney";
+import { WithdrawPotMoney } from "../Forms/WithdrawPotMoney";
+
 export const Pot = ({ id, potName, target, colorPref, currentAmount }) => {
   const queryClient = useQueryClient();
   const {
@@ -32,7 +34,7 @@ export const Pot = ({ id, potName, target, colorPref, currentAmount }) => {
   } = useModal();
 
   const [showOptions, setShowOptions] = useState(false);
-  
+
   const handleDelete = (e, id) => {
     e.preventDefault();
     deleteMutation.mutate(id);
@@ -44,6 +46,7 @@ export const Pot = ({ id, potName, target, colorPref, currentAmount }) => {
     },
   });
   const progressWidth = (currentAmount / target) * 100;
+  console.log(progressWidth)
 
   return (
     <div
@@ -87,28 +90,62 @@ export const Pot = ({ id, potName, target, colorPref, currentAmount }) => {
         </h2>
         <div className="flex justify-between items-center mb-4">
           <p className="preset-4 my-4 text-[var(--beige-500)]">Total saved</p>
-          <p className="preset-1">${currentAmount}</p>
+          <p className="preset-1">${currentAmount.toFixed(2)}</p>
         </div>
         <div className="bg-[var(--beige-100)] h-[10px] rounded-sm mt-2 relative">
           <div
             className="h-[10px] rounded-2xl absolute top-0 left-0"
             style={{
               backgroundColor: `var(--${colorPref})`,
-              width: `${progressWidth}%`,
+              width: `${progressWidth > 100 ? 100 : progressWidth}%`,
             }}
           ></div>
         </div>
         <div className="flex justify-between text-[var(--gray-500)] *:flex *:flex-col *:gap-2 my-4">
-          <p className="preset-5-bold ">{progressWidth}%</p>
+          <p className="preset-5-bold ">{progressWidth.toFixed(2)}%</p>
           <p className="preset-5">Target of ${target}</p>
         </div>
         <div className="flex *:rounded-[8px] gap-4 *:bg-(--beige-100) *:p-4 *:text-(--gray-900) *:w-1/2">
-          <button type="button" onClick={() => openAddMoneyModal(addMoneyModalRef)} className="preset-4-bold">+ Add money</button>
-          <button className="preset-4-bold">Withdraw</button>
+          <button
+            type="button"
+            onClick={() => openAddMoneyModal(addMoneyModalRef)}
+            className="preset-4-bold"
+          >
+            + Add money
+          </button>
+          <button
+            className="preset-4-bold"
+            onClick={() => openWithdrawModal(withdrawModalRef)}
+          >
+            Withdraw
+          </button>
         </div>
       </div>
-      <ModalComponent ref={addMoneyModalRef} closeModal={() => closeAddMoneyModal(addMoneyModalRef)}>
-          <AddPotMoney potName={potName} potId={id} closeModal={() => closeAddMoneyModal(addMoneyModalRef)} />
+      <ModalComponent
+        ref={addMoneyModalRef}
+        closeModal={() => closeAddMoneyModal(addMoneyModalRef)}
+      >
+        <AddPotMoney
+          potName={potName}
+          target={target}
+          currentAmount={currentAmount.toFixed(2)}
+          progressWidth={progressWidth}
+          potId={id}
+          closeModal={() => closeAddMoneyModal(addMoneyModalRef)}
+        />
+      </ModalComponent>
+      <ModalComponent
+        ref={withdrawModalRef}
+        closeModal={() => closeWithdrawModal(withdrawModalRef)}
+      >
+        <WithdrawPotMoney
+          potName={potName}
+          target={target}
+          currentAmount={currentAmount.toFixed(2)}
+          progressWidth={progressWidth}
+          potId={id}
+          closeModal={() => closeWithdrawModal(withdrawModalRef)}
+        />
       </ModalComponent>
       <ModalComponent
         ref={editModalRef}

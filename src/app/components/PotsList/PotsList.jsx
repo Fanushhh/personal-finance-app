@@ -11,7 +11,13 @@ export const PotsList = () => {
     if(isError){
         return <p>Error: {error.message}</p>
     }
-    console.log(data)
+    if(data.length === 0){
+        return(
+            <div className="flex gap-6 flex-wrap">
+                <p>Looks like there are no pots in your accout. How about you create one!</p>
+            </div>
+        )
+    }
     return(
         <div className="flex gap-6 flex-wrap">
             {data?.map((pot) => {

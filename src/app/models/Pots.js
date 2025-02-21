@@ -17,7 +17,7 @@ const PotSchema = new Schema({
         required:true,
     },
     currentAmount:{
-        type:String,
+        type:Number,
         required:true,
     },
     colorPref:{
