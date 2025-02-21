@@ -6,9 +6,9 @@ export const WithdrawPotMoney = ({ potName,currentAmount,target,progressWidth, p
     const [message, formAction] = useActionState(withdrawPotMoney, undefined);
     const queryClient = useQueryClient();
     const [withdrawnAmount, setWithdrawnAmount] = useState(0);
-    const isBiggerThanTotal = withdrawnAmount > currentAmount;
-    const deductedprocentage = isBiggerThanTotal ? 100 : (withdrawnAmount / currentAmount) * 100;
-
+    const isBiggerThanTarget = withdrawnAmount > currentAmount;
+    const deductedprocentage = (withdrawnAmount / currentAmount) * 100;
+    
     useEffect(() => {
         if(message?.success){
             queryClient.invalidateQueries("pots");
@@ -28,8 +28,10 @@ export const WithdrawPotMoney = ({ potName,currentAmount,target,progressWidth, p
                 </div>
                 <div>
                     <div className="relative w-full bg-(--beige-100) rounded-lg h-2">
-                        <div style={{width:`${progressWidth > 100 ? 100 : progressWidth}%`}} className="absolute bg-(--gray-900) h-2 rounded-lg"></div>
-                        <div style={{width:`${deductedprocentage}%`, right:`0%`, borderLeft:'2px solid var(--white)'}} className={`absolute bg-(--red) h-2 rounded-r-lg`}></div>
+                        <div style={{width:`${progressWidth > 100 ? 100 : progressWidth}%`}} className="absolute bg-(--gray-900) h-2 rounded-lg">
+                        <div style={{width:`${deductedprocentage > 100 ? 100 : deductedprocentage}%`, right: "0%", borderLeft:'2px solid var(--white)'}} className={`absolute bg-(--red) h-2 rounded-r-lg`}></div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className="flex justify-between items-center my-4">
