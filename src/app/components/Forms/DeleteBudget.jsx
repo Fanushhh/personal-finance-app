@@ -14,7 +14,7 @@ export const DeleteBudget = ({ closeModal, category, handleDelete }) => {
           </p>
           <div className="flex flex-col gap-4 preset-4 font-bold">
           <button type="submit" onClick={handleDelete} className="delete-button">Yes, Confirm Deletion</button>
-          <button onClick={closeModal}>No, Go Back</button>
+          <button type="button" onClick={closeModal}>No, Go Back</button>
           
         </div>
         </form>

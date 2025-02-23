@@ -37,7 +37,7 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
   const progressWidth = (spent / maxSpend) * 100;
 
   return (
-    <div key={id} className="p-6 max-w-[600px] w-full relative">
+    <div key={id} className="p-6 max-w-[600px] w-full relative bg-white rounded-xl hover:drop-shadow-xl transition-all duration-300">
       <div>
         <Image
           width={20}
@@ -118,12 +118,12 @@ export const Budget = ({ id, category, maxSpend, colorPref }) => {
       </ModalComponent>
       <ModalComponent
         ref={deleteModalRef}
-        closeModal={() => closeDeleteModal(editModalRef)}
+        closeModal={() => closeDeleteModal(deleteModalRef)}
       >
         <DeleteBudget
           category={category}
           handleDelete={(e) => handleDelete(e, id)}
-          closeModal={() => closeDeleteModal(editModalRef)}
+          closeModal={() => closeDeleteModal(deleteModalRef)}
         />
       </ModalComponent>
     </div>

@@ -82,10 +82,13 @@ dialog::backdrop{
 }
 
 .delete-button{
-  background-color: var(--red);
+  background-color: var(--red)!important;
   color:white;
   padding:1rem;
   border-radius: 10px;
+}
+.delete-button:hover{
+  background-color: #820000!important;
 }
 
 

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ModalComponent } from "../Modals/ModalComponent";
 import { DeletePot } from "../Forms/DeletePot";
@@ -46,7 +47,7 @@ export const Pot = ({ id, potName, target, colorPref, currentAmount }) => {
     },
   });
   const progressWidth = (currentAmount / target) * 100;
-  console.log(progressWidth)
+  
 
   return (
     <div

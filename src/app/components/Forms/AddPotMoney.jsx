@@ -1,6 +1,7 @@
 import { useState,useActionState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { addMoneyToPot } from "@/app/actions/pots";
+import { set } from "mongoose";
 export const AddPotMoney = ({ potName,currentAmount,target,progressWidth, potId, closeModal }) => {
     const [message, formAction] = useActionState(addMoneyToPot, undefined);
     const queryClient = useQueryClient();
@@ -9,9 +10,10 @@ export const AddPotMoney = ({ potName,currentAmount,target,progressWidth, potId,
     const isAlreadyFull = progressWidth >= 100;
     const isBiggerThanTotal = addedAmount > remainingAmount;
     const addedAmountProcentage = isAlreadyFull ? 0  : (addedAmount / target) * 100;
-    console.log(addedAmountProcentage)
+    
     useEffect(() => {
         if (message?.success) {
+            setAddedAmount(0);
           queryClient.invalidateQueries("budgets");
           closeModal();
         }

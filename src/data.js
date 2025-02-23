@@ -1,4 +1,4 @@
-{
+export const data = {
     "balance": {
         "current": 4836.00,
         "income": 3814.25,

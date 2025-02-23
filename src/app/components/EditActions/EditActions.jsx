@@ -46,7 +46,7 @@ export const EditActions = ({ showOptions, openEditModal, openDeleteModal, isLoa
       <button
         type="button"
         onClick={() => openDeleteModal(deleteModalRef)}
-        className="py-2 px-4 rounded-xl focus:ring-2 focus:ring-red-500"
+        className="py-2 px-4 rounded-xl focus:ring-2 focus:ring-red-500 text-(--red)"
       >
         {isLoading ? "Deleting..." : "Delete"}
       </button>

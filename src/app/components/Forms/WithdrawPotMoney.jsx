@@ -6,16 +6,15 @@ export const WithdrawPotMoney = ({ potName,currentAmount,target,progressWidth, p
     const [message, formAction] = useActionState(withdrawPotMoney, undefined);
     const queryClient = useQueryClient();
     const [withdrawnAmount, setWithdrawnAmount] = useState(0);
-    const isBiggerThanTarget = withdrawnAmount > currentAmount;
     const deductedprocentage = (withdrawnAmount / currentAmount) * 100;
     
     useEffect(() => {
         if(message?.success){
+            setWithdrawnAmount(0);
             queryClient.invalidateQueries("pots");
             closeModal();
         }
     },[message, closeModal, queryClient])
-    
     
     return(
         <div className="p-8">

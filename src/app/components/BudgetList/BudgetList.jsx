@@ -14,13 +14,12 @@ export default function BudgetList() {
     queryKey: ["budgets"],
     queryFn: getBugets,
   });
-  console.log(budgets)
 
   if (isLoading) return <p>Loading budgets...</p>;
   if (error) return <p>Error loading budgets</p>;
 
   return (
-    <div className="flex p-0 md:p-10 w-full flex-col gap-6">
+    <div className="flex p-0 md:p-10 w-full flex-wrap gap-6 ">
       
         {budgets.map((budget) => (
           <Budget
