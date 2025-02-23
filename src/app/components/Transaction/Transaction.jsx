@@ -46,7 +46,7 @@ export const Transaction = ({ src, name, category, date, amount }) => {
           <p
             className="font-bold"
             style={{ color: amount > 0 ? "var(--green)" : "black" }}
-          >{updatedAmount}$</p>
+          >{updatedAmount}</p>
           <p className="preset-4 text-(--gray-500)">{adjustedDate}</p>
         </div>
       </div>
