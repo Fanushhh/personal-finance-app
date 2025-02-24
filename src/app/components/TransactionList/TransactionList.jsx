@@ -8,7 +8,7 @@ import { Transaction } from "../Transaction/Transaction";
 import { useState } from "react";
 import { TransactionFilter } from "../TransactionsFilter/TransactionsFilter";
 import { useTransactionFilter } from "@/app/hooks/useTransasctionFilter";
-import { Suspense } from "react";
+
 export const TransactionList = () => {
   const {query, category, sort} = useTransactionFilter();
   
@@ -29,9 +29,9 @@ export const TransactionList = () => {
   if (error) return <div>Error: {error.message}</div>;
   return (
     <section className="bg-white my-6 p-8 max-[600px]:p-6 rounded-xl w-full ">
-      <Suspense fallback={<>Loading</>}>
+      
       <TransactionFilter setPage={setPage}/>
-      </Suspense>
+      
       <div className=" justify-between text-center preset-4 text-(--gray-500) border-b-1 border-(--gray-100) pb-4 grid grid-cols-4 gap-4 max-[600px]:hidden">
         <p>Recipient/Sender</p>
         <p>Category</p>
