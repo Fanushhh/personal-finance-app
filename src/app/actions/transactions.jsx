@@ -4,18 +4,50 @@
 import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
 import Transaction from "../models/Transaction";
-export const getTransactions = async (page, limit= 10) => {
+export const getTransactions = async (page,query, category, sort,limit= 10) => {
+  console.log(query)
+  
     const skip = page * limit;
     const session = await getSession();
     if(!session) return null;
+    const filter = {};
+    if(query){
+      filter.name = {$regex:query, $options:"i"}
+    }
+    if(category){
+      filter.category = category;
+    }
+    const sortObject = {}
+    switch(sort){
+      case "oldest":
+        sortObject.date = 1;
+        break;
+      case "a to z":
+        sortObject.name = 1;
+        break;
+      case "z to a":
+        sortObject.name = -1;
+        break;
+      case "descending":
+        sortObject.amount = -1;
+        break;
+      case "ascending":
+        sortObject.amount = 1
+        break;
+      default:
+        sortObject.date = -1;
+        break;
+    }
     await connectDB();
-    const transactions = await Transaction.find().limit(10).skip(page * 10);
-    const totalTransactions = await Transaction.countDocuments();
-
+    const transactions = await Transaction.find(filter).limit(10).skip(skip).sort(sortObject);
+    
+    const totalTransactions = await Transaction.countDocuments(filter);
+    console.log(totalTransactions)
   // Determine if there's another page
   const hasMore = skip + limit < totalTransactions;
   const transactionsData = JSON.parse(JSON.stringify(transactions));
   const totalPages = Math.ceil(totalTransactions / limit);
+ 
     return {
         transactions: transactionsData,
         hasMore,
@@ -23,3 +55,5 @@ export const getTransactions = async (page, limit= 10) => {
     };
    
 }
+
+

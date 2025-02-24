@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const Transaction = ({ src, name, category, date, amount }) => {
     const adjustedDate = new Date(date).toLocaleDateString();
-    const updatedAmount = amount > 0 ? `+$${amount}` : amount.replace("-", "-$");
+    const updatedAmount = amount > 0 ? `+$${String(amount)}` : `${String(amount).replace("-", "-$")}`
   return (
     <>
    

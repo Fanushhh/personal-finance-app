@@ -29,5 +29,7 @@ export const populateTransactionsOnce = async () => {
   console.log("✅ Finished inserting all transactions!");
 };
 
-// Run the function
-populateTransactionsOnce();
+export const deleteTransactions = async () => {
+  await connectDB();
+  await Transaction.deleteMany({})
+}
