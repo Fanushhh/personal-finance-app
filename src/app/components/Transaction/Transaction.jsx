@@ -6,7 +6,7 @@ export const Transaction = ({ src, name, category, date, amount }) => {
   return (
     <>
    
-      <div className=" items-center py-4 justify-items-center grid grid-cols-4 gap-4 max-[600px]:hidden">
+      <div className=" items-center py-4 justify-items-center grid grid-cols-4 gap-4 max-[600px]:hidden border-b-1 border-(--gray-500-border)">
         
         <div className="flex items-center place-self-start gap-4">
           <Image

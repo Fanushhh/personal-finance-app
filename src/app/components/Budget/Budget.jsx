@@ -37,7 +37,7 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
     transactions.reduce((acc, nextVal) => acc + nextVal.amount, 0)
   );
   const progressWidth = (transactionsTotal / maxSpend) * 100;
-
+  console.log(category)
   return (
     <div
       key={id}
@@ -110,7 +110,7 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
       >
         <div className="flex justify-between w-full">
           <h2 className="preset-3">Latest spending</h2>
-          <Link href="/transactions" className="custom-after-bg mr-2">
+          <Link href={`/transactions?category=${category}`} className="custom-after-bg mr-2">
             See all
           </Link>
         </div>
