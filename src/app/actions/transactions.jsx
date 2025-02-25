@@ -4,7 +4,7 @@
 import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
 import Transaction from "../models/Transaction";
-export const getTransactions = async (page,query, category, sort,limit= 10) => {
+export const getTransactionsPaginated = async (page,query, category, sort,limit= 10) => {
   console.log(query)
   
     const skip = page * limit;
@@ -57,6 +57,16 @@ export const getTransactions = async (page,query, category, sort,limit= 10) => {
         totalPages,
     };
    
+}
+
+export const getAllTransactions = async () => {
+  const session = await getSession();
+    if(!session) return null;
+  await connectDB();
+  const transactions = await Transaction.find();
+  console.log(transactions)
+  const transactionPayload = JSON.parse(JSON.stringify(transactions));
+  return transactionPayload;
 }
 
 

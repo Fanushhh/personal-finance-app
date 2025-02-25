@@ -3,7 +3,7 @@ import {
   keepPreviousData,
   useQuery,
 } from "@tanstack/react-query";
-import { getTransactions } from "@/app/actions/transactions";
+import { getTransactionsPaginated } from "@/app/actions/transactions";
 import { Transaction } from "../Transaction/Transaction";
 import { useState } from "react";
 import { TransactionFilter } from "../TransactionsFilter/TransactionsFilter";
@@ -20,7 +20,7 @@ export const TransactionList = () => {
     isPlaceholderData,
   } = useQuery({
     queryKey: ["transactions", page, query, category, sort],
-    queryFn: () => getTransactions(page, query, category, sort),
+    queryFn: () => getTransactionsPaginated(page, query, category, sort),
     placeholderData: keepPreviousData,
   });
   const totalNumberofPages = [...Array(transactions?.totalPages).keys()];

@@ -1,6 +1,7 @@
 "use client";
 
 import { getBugets } from "@/app/actions/bugets";
+import { getAllTransactions } from "@/app/actions/transactions";
 import { useQuery } from "@tanstack/react-query";
 
 export const DonutChart = () => {
@@ -8,7 +9,21 @@ export const DonutChart = () => {
     queryKey: ["budgets"],
     queryFn: getBugets,
   });
-
+  const {
+    data: transactions,
+    isLoading: areTransactionsLoading,
+    isError: isTransactionError,
+  } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: getAllTransactions,
+  });
+  console.log(transactions);
+  const totalTransactionsAmount = transactions?
+    .reduce((acc, nextVal) => acc + nextVal.amount, 0)
+    .toFixed(2);
+  console.log(totalTransactionsAmount);
+  if (areTransactionsLoading) return <p>Loading transactions...</p>;
+  if (isTransactionError) return <p>Error loading transactions</p>;
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading budgets</p>;
 
@@ -70,11 +85,15 @@ export const DonutChart = () => {
           x="100"
           y="100"
           textAnchor="middle"
-          dy=".3em"
-          fontSize="20"
+          fontSize="24"
           fontWeight="bold"
         >
-          ${totalAmount}
+          <tspan  x="100" dy="">
+            ${totalTransactionsAmount} 
+          </tspan>
+          <tspan fill="var(--beige-500)" fontWeight={400} fontSize={14} x="100" dy="1.5rem">
+          of ${totalAmount} limit
+          </tspan>
         </text>
       </svg>
 
