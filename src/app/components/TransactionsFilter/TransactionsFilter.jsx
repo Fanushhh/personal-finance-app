@@ -37,12 +37,14 @@ export const TransactionFilter = ({setPage}) => {
     }, [debounchedSearch]);
     const handleSortSelect = (sortOption) => {
         setFilter({sort: sortOption});
-        setShowSort(!showSort)
+        setShowSort(!showSort);
+        
         
     }
     const handleFilterSelect = (filterOption) => {
         setFilter({category: filterOption});
-        setShowFilter(!showFilter)
+        setShowFilter(!showFilter);
+        setPage(0)
         
     }
 

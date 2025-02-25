@@ -22,7 +22,6 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
     openModal: openDeleteModal,
     closeModal: closeDeleteModal,
   } = useModal();
-  const spent = 25;
   const handleDelete = (e, id) => {
     e.preventDefault();
     deleteMutation.mutate(id);
@@ -130,30 +129,30 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
               return (
                 <div
                   key={id}
-                  className=" items-center py-4 justify-items-normal grid grid-cols-4 gap-2"
+                  className=" items-center py-4 justify-items-normal grid grid-cols-4 gap-2 border-b-1 border-(--gray-500-border)"
                 >
                   <div className="flex items-center place-self-start gap-4 col-span-3">
                     <Image
                       className="rounded-full"
                       src={src.substr(1)}
                       alt={name}
-                      width={50}
-                      height={50}
+                      width={32}
+                      height={32}
                     />
                     <div>
-                      <p className=" font-bold">{name}</p>
-                      <p className="preset-4 text-(--gray-500)">{category}</p>
+                      <p className="preset-5-bold">{name}</p>
+                      
                     </div>
                   </div>
 
                   <div className="flex items-end flex-col">
                     <p
-                      className="font-bold"
+                      className="preset-5-bold"
                       style={{ color: amount > 0 ? "var(--green)" : "black" }}
                     >
                       {updatedAmount}
                     </p>
-                    <p className="preset-4 text-(--gray-500)">{adjustedDate}</p>
+                    <p className="preset-5 text-(--gray-500)">{adjustedDate}</p>
                   </div>
                 </div>
               );

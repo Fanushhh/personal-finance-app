@@ -64,7 +64,6 @@ export const getAllTransactions = async () => {
     if(!session) return null;
   await connectDB();
   const transactions = await Transaction.find();
-  console.log(transactions)
   const transactionPayload = JSON.parse(JSON.stringify(transactions));
   return transactionPayload;
 }
