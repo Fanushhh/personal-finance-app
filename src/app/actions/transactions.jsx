@@ -19,6 +19,9 @@ export const getTransactions = async (page,query, category, sort,limit= 10) => {
     }
     const sortObject = {}
     switch(sort){
+      case "latest":
+        sortObject.date = -1;
+        break;
       case "oldest":
         sortObject.date = 1;
         break;
@@ -28,10 +31,10 @@ export const getTransactions = async (page,query, category, sort,limit= 10) => {
       case "z to a":
         sortObject.name = -1;
         break;
-      case "descending":
+      case "highest":
         sortObject.amount = -1;
         break;
-      case "ascending":
+      case "lowest":
         sortObject.amount = 1
         break;
       default:
@@ -43,11 +46,11 @@ export const getTransactions = async (page,query, category, sort,limit= 10) => {
     
     const totalTransactions = await Transaction.countDocuments(filter);
     console.log(totalTransactions)
-  // Determine if there's another page
-  const hasMore = skip + limit < totalTransactions;
-  const transactionsData = JSON.parse(JSON.stringify(transactions));
-  const totalPages = Math.ceil(totalTransactions / limit);
- 
+    // Determine if there's another page
+    const hasMore = skip + limit < totalTransactions;
+    const transactionsData = JSON.parse(JSON.stringify(transactions));
+    const totalPages = Math.ceil(totalTransactions / limit);
+  
     return {
         transactions: transactionsData,
         hasMore,

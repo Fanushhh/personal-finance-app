@@ -8,7 +8,7 @@ import { Transaction } from "../Transaction/Transaction";
 import { useState } from "react";
 import { TransactionFilter } from "../TransactionsFilter/TransactionsFilter";
 import { useTransactionFilter } from "@/app/hooks/useTransasctionFilter";
-
+import { Pagination } from "../Pagination/Pagination";
 export const TransactionList = () => {
   const {query, category, sort} = useTransactionFilter();
   
@@ -24,6 +24,7 @@ export const TransactionList = () => {
     placeholderData: keepPreviousData,
   });
   const totalNumberofPages = [...Array(transactions?.totalPages).keys()];
+  console.log(transactions)
   
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -51,78 +52,7 @@ export const TransactionList = () => {
           />
         );
       })}
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={() => {
-            setPage(page - 1);
-            
-          }}
-          disabled={page === 0}
-        >
-          Previous
-        </button>
-        <div className="flex gap-3">
-            {totalNumberofPages.map((_, i) => {
-                return (
-                    <button
-                    key={i}
-                    onClick={() => {
-                        setPage(i);
-            
-                    }}
-                    disabled={page === i}
-                    >
-                    {i + 1}
-                    </button>
-                );
-            })}
-        </div>
-        <button
-          onClick={() => {
-            if (!isPlaceholderData && transactions.hasMore) {
-              setPage(old => old + 1);
-              
-            }
-          }}
-          disabled={isPlaceholderData || !transactions?.hasMore}
-        >
-          Next
-        </button>
-      </div>
+      <Pagination transactions={transactions} page={page} setPage={setPage} totalNumberofPages={totalNumberofPages} isPlaceholderData={isPlaceholderData}/>
     </section>
   );
 };
-
-const filterTransactions = (transactions, query, sort, category) => {
-  if(query === "" || sort === "" || category === ""){
-    return transactions;
-  }
-  const filteredTransactions = transactions.filter(transaction => transaction.name.includes(query))
-  // switch(sort){
-  //   case "oldest":
-  //     filteredTransactions.sort((a,b) => a.date < b.date)
-  //     break;
-  //   case "a to z":
-  //     filteredTransactions.sort((a,b) => a.name > b.name)
-  //     break;
-  //   case "b to a":
-  //     filteredTransactions.sort((a,b) => a.name < b.name)
-  //     break;
-  //   case "highest":
-  //     filteredTransactions.sort((a,b) => a.amount > b.amount)
-  //     break;
-  //   case "lowest":
-  //     filteredTransactions.sort((a,b) => a.amount < b.amount)
-  //     break;
-  //   default:
-  //     filteredTransactions.sort((a,b) => a.date > b.date)
-  //     break;
-
-  // }
-  // if(category !== ""){
-  //   filteredTransactions.filter((transaction) => transaction.category === category);
-  // }
-  console.log(filteredTransactions)
-  return filteredTransactions;
-
-}
