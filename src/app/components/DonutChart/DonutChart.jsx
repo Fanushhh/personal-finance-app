@@ -18,9 +18,7 @@ export const DonutChart = () => {
     queryFn: getAllTransactions,
   });
   console.log(transactions);
-  const totalTransactionsAmount = transactions?
-    .reduce((acc, nextVal) => acc + nextVal.amount, 0)
-    .toFixed(2);
+  const totalTransactionsAmount = transactions?.reduce((acc, nextVal) => acc + nextVal.amount, 0).toFixed(2);
   console.log(totalTransactionsAmount);
   if (areTransactionsLoading) return <p>Loading transactions...</p>;
   if (isTransactionError) return <p>Error loading transactions</p>;
