@@ -11,7 +11,7 @@ export const Pagination = ({page, setPage, totalNumberofPages, transactions, isP
                 setPage(page - 1);
             
               }}
-              className={` disabled:bg-black! flex border-1 p-4 rounded-md border-(--beige-500) ${page === 0 ? 'bg-black text-white' : ''}`}
+              className={` disabled:bg-black! flex gap-2 border-1 p-4 rounded-md border-(--beige-500) ${page === 0 ? 'bg-black text-white' : ''}`}
               disabled={page === 0}
             >
                 <Image src="/assets/images/icon-caret-left.svg" alt="previous icon" width={5} height={5} />
@@ -43,11 +43,12 @@ export const Pagination = ({page, setPage, totalNumberofPages, transactions, isP
               
             }
           }}
-          className={`border-1 border-(--beige-500) disabled:bg-black! p-4 rounded-md ${!transactions?.hasMore ? 'bg-black text-white' : ''}`}
+          className={`border-1 border-(--beige-500) disabled:bg-black! flex items-center gap-2 p-4 rounded-md ${!transactions?.hasMore ? 'bg-black text-white' : ''}`}
           disabled={isPlaceholderData || !transactions?.hasMore}
         >
-         <Image src="/assets/images/icon-caret-right.svg" alt="previous icon" width={5} height={5} />
+         
          <span className="max-[1000px]:hidden block ">Next</span>
+         <Image src="/assets/images/icon-caret-right.svg" alt="previous icon" width={5} height={5} />
         </button>
       </div>
     )
