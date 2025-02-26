@@ -37,7 +37,7 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
     transactions.reduce((acc, nextVal) => acc + nextVal.amount, 0)
   );
   const progressWidth = (transactionsTotal / maxSpend) * 100;
-  console.log(category)
+  
   return (
     <div
       key={id}

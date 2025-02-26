@@ -36,7 +36,7 @@ export const DonutChart = () => {
   let accumulatedPercentage = 0;
 
   return (
-    <figure className="flex max-[600px]:flex-col p-6 lg:flex-col gap-8 lg:max-w-[400px] items-center max-[1000px]:justify-evenly">
+    <figure className="flex max-[600px]:flex-col lg:flex-col gap-8 lg:max-w-[400px] lg:w-full items-center max-[1000px]:justify-evenly">
       {/* SVG Donut Chart */}
       <svg
         viewBox="0 0 200 200"
@@ -86,10 +86,10 @@ export const DonutChart = () => {
           fontSize="24"
           fontWeight="bold"
         >
-          <tspan  x="100" dy="">
+          <tspan x="100" dy="">
             ${totalTransactionsAmount} 
           </tspan>
-          <tspan fill="var(--beige-500)" fontWeight={400} fontSize={14} x="100" dy="1.5rem">
+          <tspan fill="var(--beige-500)" fontWeight={400} fontSize={14} x="100" dy="24">
           of ${totalAmount} limit
           </tspan>
         </text>
