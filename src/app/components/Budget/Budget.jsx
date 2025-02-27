@@ -34,14 +34,25 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
     },
   });
   const transactionsTotal = Math.abs(
-    transactions.reduce((acc, nextVal) => acc + nextVal.amount, 0)
+    transactions.reduce((acc, nextVal) =>{
+      
+      const transactionDate = new Date(nextVal.date).getUTCMonth();// should be august aka 7
+      const hardCodedTransactionMonth = new Date("2024-08-19T00:00:00Z").getUTCMonth(); // should also be 7
+      
+      if(transactionDate === hardCodedTransactionMonth){
+        console.log(nextVal.amount)
+        return acc + nextVal.amount;
+      }
+      return acc;
+    }, 0)
   );
+  
   const progressWidth = (transactionsTotal / maxSpend) * 100;
   
   return (
     <div
       key={id}
-      className="p-6 max-w-[600px] w-full relative bg-white rounded-xl hover:drop-shadow-xl transition-all duration-300"
+      className="p-6 lg:max-w-[600px] w-full relative bg-white rounded-xl hover:drop-shadow-xl transition-all duration-300"
     >
       <div>
         <Image
@@ -88,19 +99,19 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
               backgroundColor: `var(--${colorPref})`,
               width: `${progressWidth > 100 ? 98 : progressWidth}%`,
             }}
-          ></div>
+          ></div> 
         </div>
-        <div className="flex justify-between *:flex *:flex-col *:gap-2 my-4">
+        <div className="flex justify-between *:flex *:flex-col *:gap-2 my-4" >
           <p className="preset-4 text-[var(--beige-500)]">
-            Spent:{" "}
+            Spent{" "}
             <span className=" preset-4-bold text-black">
               ${transactionsTotal}
             </span>
           </p>
           <p className="preset-4 text-[var(--beige-500)]">
-            Remaining:{" "}
+            Remaining{" "}
             <span className="preset-4-bold text-black">
-              ${maxSpend - transactionsTotal}
+              {maxSpend - transactionsTotal < 0 ? `-$${Math.abs(maxSpend - transactionsTotal)}` : `$${maxSpend - transactionsTotal}`}
             </span>
           </p>
         </div>
@@ -129,7 +140,7 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
               return (
                 <div
                   key={id}
-                  className=" items-center py-4 justify-items-normal grid grid-cols-4 gap-2 border-b-1 border-(--gray-500-border)"
+                  className=" items-center py-4 justify-items-normal grid grid-cols-4 gap-2 last:border-0 border-b-1 border-(--gray-500-border)"
                 >
                   <div className="flex items-center place-self-start gap-4 col-span-3">
                     <Image

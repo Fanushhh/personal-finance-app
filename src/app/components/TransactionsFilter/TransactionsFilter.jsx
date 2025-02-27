@@ -24,7 +24,7 @@ const filterOptions = [
   "Shopping",
   "General",
 ];
-export const TransactionFilter = ({ setPage }) => {
+export const TransactionFilter = ({ setPage, shouldIncludeFilter }) => {
   const { query, sort, category, setFilter } = useTransactionFilter();
   const randomId = useId();
   const [localQuery, setLocalQuery] = useState(query);
@@ -51,7 +51,10 @@ export const TransactionFilter = ({ setPage }) => {
         <input
           value={localQuery}
           onChange={(e) => {
-            setPage(0);
+            if(shouldIncludeFilter){
+
+              setPage(0);
+            }
             setLocalQuery(e.target.value);
           }}
           className="w-full"
@@ -96,7 +99,7 @@ export const TransactionFilter = ({ setPage }) => {
             </div>
           )}
         </div>
-        <div className="relative">
+        {shouldIncludeFilter && <div className="relative">
           <button
             type="button"
             onClick={() => setShowFilter(!showFilter)}
@@ -128,7 +131,7 @@ export const TransactionFilter = ({ setPage }) => {
               })}
             </div>
           )}
-        </div>
+        </div>}
       </div>
       <div className="hidden gap-6 min-[1001px]:flex">
         <fieldset className="flex gap-4 items-center">
@@ -150,7 +153,7 @@ export const TransactionFilter = ({ setPage }) => {
             <option value="lowest">Lowest</option>
           </select>
         </fieldset>
-        <fieldset className="flex gap-4 items-center">
+        {shouldIncludeFilter && <fieldset className="flex gap-4 items-center">
           <label className="" htmlFor="category">
             Category
           </label>
@@ -173,7 +176,7 @@ export const TransactionFilter = ({ setPage }) => {
             <option value="Shopping">Shopping</option>
             <option value="General">General</option>
           </select>
-        </fieldset>
+        </fieldset>}
       </div>
     </section>
   );

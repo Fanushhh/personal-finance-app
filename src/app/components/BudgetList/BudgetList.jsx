@@ -31,7 +31,7 @@ export default function BudgetList() {
   if (transactionError) return <p>Error loading transactions</p>;
 
   return (
-    <div className="flex p-0 md:p-10 w-full flex-wrap gap-6 ">
+    <div className="flex p-0 w-full flex-wrap gap-6 ">
       
         {budgets.map((budget) => {
           
