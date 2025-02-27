@@ -47,7 +47,7 @@ export const TransactionFilter = ({ setPage, shouldIncludeFilter }) => {
 
   return (
     <section className="flex justify-between gap-6 mb-6">
-      <fieldset className="w-full max-w-[200px] min-[800px]:max-w-[320px]">
+      <fieldset className="w-full max-w-[200px] min-[800px]:max-w-[320px] relative">
         <input
           value={localQuery}
           onChange={(e) => {
@@ -63,6 +63,7 @@ export const TransactionFilter = ({ setPage, shouldIncludeFilter }) => {
           id="query"
           placeholder="Search transaction"
         />
+        <Image src="/assets/images/icon-search.svg" className="absolute right-4 top-[13px]" width={20} height={20} alt="search icon" />
       </fieldset>
       <div className="flex items-center gap-4">
         <div className="relative">

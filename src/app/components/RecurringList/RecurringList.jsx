@@ -2,11 +2,37 @@
 
 import Image from "next/image";
 import { TransactionFilter } from "../TransactionsFilter/TransactionsFilter";
+import { useTransactionFilter } from "@/app/hooks/useTransasctionFilter";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { getRecurringTransactions } from "@/app/actions/transactions";
+import { RecurringSummary } from "../RecurringSummary/RecurringSummary";
 
-export const RecurringList = ({transactions, isLoading, isError}) => {
-  
+export const RecurringList = () => {
+  const {query,sort} = useTransactionFilter(); // get URL parameters
+
+  const {
+    data: recurringBills,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["recurring-bills",query,sort],
+    queryFn: () => getRecurringTransactions(query,sort),
+    placeholderData: keepPreviousData,
+  });
+   // fetch data with/without the URL params
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (isError) {
+    return <p>Error loading bills</p>;
+  }
+  if(!recurringBills){
+    return <p>No data</p>
+  }
   return (
-    <section className=" p-8 preset-4 text-(--gray-500) bg-white  w-full">
+    <section className="flex gap-8 my-8 max-[1000px]:flex-col w-full">
+       <RecurringSummary recurringBills={recurringBills}/>
+    <div className=" p-8 preset-4 text-(--gray-500) bg-white rounded-xl h-fit  w-full">
       <TransactionFilter shouldIncludeFilter={false} />
         <div className="grid grid-cols-3 pb-4 border-b-2 border-(--gray-500-border) max-[768px]:hidden">
             <p>Bill Title</p>
@@ -14,7 +40,7 @@ export const RecurringList = ({transactions, isLoading, isError}) => {
             <p className="place-self-end">Amount</p>
         </div>
       <div className="">
-          {transactions.map((bill) => {
+          {recurringBills.map((bill) => {
             const date = new Date(bill.date).getUTCDate();
             const dueDate = new Date("2024-08-19T00:00:00Z").getUTCDate();
             const isAlreadyPaid = dueDate > date;
@@ -45,6 +71,7 @@ export const RecurringList = ({transactions, isLoading, isError}) => {
             );
           })}
       </div>
+    </div>
     </section>
   );
 };
