@@ -45,7 +45,7 @@ export const WithdrawPotMoney = ({ potName,currentAmount,target,progressWidth, p
                     <input name="deductedAmount" onChange={(e) => setWithdrawnAmount(Number(e.target.value))} value={withdrawnAmount > currentAmount ? currentAmount : withdrawnAmount} className="pl-8! relative" type="number"/>
                     <span className="absolute left-4 top-[54px] text-(--gray-500)">$</span>
                 </div>
-                <button type="submit">Confirm withdrawal</button>
+                <button className="text-center" type="submit">Confirm withdrawal</button>
             </form>
         </div>
     )

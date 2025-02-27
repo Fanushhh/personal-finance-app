@@ -47,7 +47,7 @@ export const AddPotMoney = ({ potName,currentAmount,target,progressWidth, potId,
                     <input step="any" name="addedAmount" onChange={(e) => setAddedAmount(Number(e.target.value))} defaultValue={addedAmount > currentAmount ? currentAmount : addedAmount} className="pl-8! relative" type="number"/>
                     <span className="absolute left-4 top-[54px] text-(--gray-500)">$</span>
                 </div>
-                <button type="submit">Confirm addition</button>
+                <button type="submit" className="text-center">Confirm addition</button>
             </form>
         </div>
     )

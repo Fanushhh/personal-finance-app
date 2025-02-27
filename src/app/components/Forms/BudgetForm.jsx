@@ -131,7 +131,7 @@ export const BudgetForm = ({ closeModal }) => {
           )}
         </div>
 
-        <button type="submit">Add Budget</button>
+        <button type="submit" className="text-center">Add Budget</button>
       </form>
     </div>
   );

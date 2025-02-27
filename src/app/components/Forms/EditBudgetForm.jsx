@@ -96,7 +96,7 @@ export const EditBudgetForm = ({category, id,maxSpend, colorPref, closeModal}) =
                             ))}
                         </select>
                     </div>
-                    <button type="submit">Save changes</button>
+                    <button type="submit" className="text-center">Save changes</button>
                 </form>
             </div>
     )

@@ -46,7 +46,7 @@ export const DonutChart = () => {
   },{});
 
   const radius = 80; // Controls the size of the donut
-  const thickness = 30; // Stroke thickness
+  const thickness = 25; // Stroke thickness
   const circumference = 2 * Math.PI * radius;
   let accumulatedPercentage = 0;
 
@@ -55,7 +55,7 @@ export const DonutChart = () => {
       {/* SVG Donut Chart */}
       <svg
         viewBox="0 0 200 200"
-        className="lg:mx-auto my-10 w-[240px] h-[240px] "
+        className="lg:mx-auto my-10 max-w-full w-[320px]"
       >
         {/* Background Circle */}
         <circle
