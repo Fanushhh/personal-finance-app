@@ -196,7 +196,7 @@ button[type="submit"]{
   padding:1rem;
   margin:1rem 0;
   border-radius: 10px;
-  @apply text-[12px] leading-[150%] font-bold;
+  font-weight: bold;
   transition: all 200ms ease-in-out;
 }
 button[type="submit"]:hover{
@@ -233,10 +233,10 @@ button[type="submit"]:hover{
     @apply text-[14px] leading-[150%] font-normal;
   }
   .preset-4-bold{
-    @apply text-[14px] leading-[150%] font-bold;
+    @apply text-[14px] leading-[150%] font-bold ;
   }
   .preset-5{
-    @apply text-[12px] leading-[150%] font-normal;
+    @apply text-[12px] leading-[150%] font-normal ;
   }
   .preset-5-bold{
     @apply text-[12px] leading-[150%] font-bold;

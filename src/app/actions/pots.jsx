@@ -84,11 +84,11 @@ export const editPot = async ( state, formData) => {
   };
 };
 
-export const getPots = async () => {
+export const getPots = async (limit) => {
   const {userId} = await getSession();
   
   await connectDB();
-  const userPots = await Pot.find({user:userId});
+  const userPots = await Pot.find({user:userId}).limit(limit);
   
   return JSON.parse(JSON.stringify(userPots));
 };

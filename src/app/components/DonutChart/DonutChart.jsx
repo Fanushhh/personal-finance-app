@@ -15,7 +15,7 @@ export const DonutChart = () => {
     isError: isTransactionError,
   } = useQuery({
     queryKey: ["transactions"],
-    queryFn: getAllTransactions,
+    queryFn: () => getAllTransactions(),
   });
   const totalTransactionsAmount = Math.abs(transactions?.reduce((acc, nextVal) => {
     const hardCodedTransactionMonth = new Date("2024-08-19T00:00:00Z").getUTCMonth();
@@ -51,7 +51,7 @@ export const DonutChart = () => {
   let accumulatedPercentage = 0;
 
   return (
-    <figure className="flex max-[600px]:flex-col rounded-xl h-fit bg-white lg:flex-col gap-8 lg:max-w-[400px] p-6 lg:w-full items-center max-[1000px]:justify-evenly">
+    <figure className="flex max-[600px]:flex-col rounded-xl h-fit bg-white lg:flex-col gap-8  p-6 items-center max-[1000px]:justify-evenly">
       {/* SVG Donut Chart */}
       <svg
         viewBox="0 0 200 200"

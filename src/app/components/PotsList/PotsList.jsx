@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getPots } from "@/app/actions/pots";
 import { Pot } from "../Pot/Pot";
 export const PotsList = () => {
-    const {data, isLoading, isError, error} = useQuery({ queryKey: ['pots'], queryFn: getPots });
+    const {data, isLoading, isError, error} = useQuery({ queryKey: ['pots'], queryFn: () => getPots() });
 
     if(isLoading){
         return <p>Loading pots...</p>

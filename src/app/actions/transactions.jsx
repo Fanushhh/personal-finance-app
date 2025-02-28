@@ -4,9 +4,8 @@
 import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
 import Transaction from "../models/Transaction";
+
 export const getTransactionsPaginated = async (page,query, category, sort,limit= 10) => {
-  
-  
     const skip = page * limit;
     const session = await getSession();
     if(!session) return null;
@@ -59,23 +58,26 @@ export const getTransactionsPaginated = async (page,query, category, sort,limit=
    
 }
 
-export const getAllTransactions = async () => {
+export const getAllTransactions = async (limit) => {
   const session = await getSession();
     if(!session) return null;
   await connectDB();
-  const transactions = await Transaction.find();
+  const transactions = await Transaction.find().limit(limit);
   const transactionPayload = JSON.parse(JSON.stringify(transactions));
   return transactionPayload;
 }
 
-export const getRecurringTransactions = async (query,sort) => {
+export const getRecurringTransactions = async (query,sort, limit) => {
   const session = await getSession();
     if(!session) return null;
+   
+
     const filter = {
       recurring:true,
     };
     if(query){
       filter.name = {$regex:query, $options:"i"}
+      
     }
     
     const sortObject = {}
@@ -103,7 +105,9 @@ export const getRecurringTransactions = async (query,sort) => {
         break;
     }
   await connectDB();
-  const transactions = await Transaction.find(filter).sort(sortObject);
+  
+  const transactions = await Transaction.find(filter).sort(sortObject).limit(limit);
+  console.log(transactions)
   const transactionPayload = JSON.parse(JSON.stringify(transactions));
   return transactionPayload;
 }

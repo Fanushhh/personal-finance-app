@@ -22,7 +22,7 @@ export const PotForm = ({closeModal}) => {
     const queryClient = useQueryClient()
     const [message, formAction] = useActionState(createPot, undefined);
    
-    const {data, isLoading, isError, error} = useQuery({ queryKey: ['pots'], queryFn: getPots });
+    const {data} = useQuery({ queryKey: ['pots'], queryFn: () => getPots() });
    
     const updatedColors = options.filter((option) => {
         return !data?.some((pot) => pot.colorPref === option.value)

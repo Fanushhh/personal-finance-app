@@ -1,4 +1,5 @@
-  // Debugging log to check if it's loaded correctly
+
+// Debugging log to check if it's loaded correctly
 import { connectDB } from "./mongo";
 import Transaction from "../models/Transaction";
 import {data} from "../../data"
@@ -33,3 +34,5 @@ export const deleteTransactions = async () => {
   await connectDB();
   await Transaction.deleteMany({})
 }
+
+

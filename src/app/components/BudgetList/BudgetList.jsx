@@ -21,7 +21,7 @@ export default function BudgetList() {
     error: transactionError,
   } = useQuery({
     queryKey: ["transactions"],
-    queryFn: getAllTransactions,
+    queryFn: () => getAllTransactions(),
 
   })
 

@@ -1,6 +1,7 @@
 'use server'
 
 import mongoose, {Schema} from "mongoose";
+import { date } from "zod";
 
 
 const TransactionSchema = new Schema({
@@ -19,7 +20,7 @@ const TransactionSchema = new Schema({
 
     },
     date:{
-        type:String,
+        type:Date,
         required:true,
 
     },
