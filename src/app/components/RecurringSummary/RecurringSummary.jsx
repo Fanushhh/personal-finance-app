@@ -10,7 +10,8 @@ const {
     paidLength,
     upcomingLength,
   } = calculateDueBills(recurringBills);
-  const totalBills = Math.abs(dueSoonAmount + upcomingAmount + paidAmount);
+  
+  const totalBills = Math.abs(Number(dueSoonAmount) + Number(upcomingAmount) + Number(paidAmount));
     return(
         <div className="lg:w-[320px] max-w-full w-full text-(--gray-500)">
                 

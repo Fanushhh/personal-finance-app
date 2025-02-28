@@ -26,15 +26,15 @@ export default function calculateDueBills(bills) {
       );
     });
   
-    const dueSoonAmount = dueSoonPayments.reduce((acc, curr) => {
+    const dueSoonAmount = Number(dueSoonPayments.reduce((acc, curr) => {
       return acc + curr.amount;
-    }, 0).toFixed(2);
-    const upcomingAmount = upcomingBills.reduce((acc, curr) => {
+    }, 0)).toFixed(2);
+    const upcomingAmount = Number(upcomingBills.reduce((acc, curr) => {
       return acc + curr.amount;
-    }, 0).toFixed(2);
-    const paidAmount = paidBills.reduce((acc, curr) => {
+    }, 0)).toFixed(2);
+    const paidAmount = Number(paidBills.reduce((acc, curr) => {
       return acc + curr.amount;
-    }, 0).toFixed(2);
+    }, 0)).toFixed(2);
     return {
       dueSoonAmount,
       upcomingAmount,
