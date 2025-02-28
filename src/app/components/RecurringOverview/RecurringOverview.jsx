@@ -13,7 +13,7 @@ export const RecurringOverview = async () => {
 
     
     return(
-<section className="bg-white rounded-xl mt-6 p-6">
+<section className="bg-white rounded-xl mt-6 p-8">
 <div className="flex w-full justify-between mb-5 ">
                 <h2 className="preset-2">Recurring bills</h2>
                 <Link className="text-(--gray-500)" href="/pots">See Details <Image src="/assets/images/icon-caret-right.svg" className="ml-1 inline-block!" width={5} height={5} alt="caret right icon" /></Link>
