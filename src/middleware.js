@@ -14,7 +14,9 @@ export default async function middleware(req) {
   const cookie = (await cookies())?.get("session")?.value;
 
   const session = await decrypt(cookie);
-  const isSessionExpiringSoon = await isSessionExpiring(session?.expiresAt, 1440);
+  const isSessionExpiringSoon = session?.expiresAt
+  ? await isSessionExpiring(session.expiresAt, 1440)
+  : false;
   
   if (isSessionExpiringSoon) {
     await updateSession();
