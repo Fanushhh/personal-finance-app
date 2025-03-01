@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { BudgetValidationSchema } from "../lib/definitions";
 import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
@@ -54,6 +55,7 @@ export const createBudget = async (state, formData) => {
     colorPref,
   });
   await budget.save();
+  revalidatePath('/budgets');
   return {
     ...initialState,
     success: true,
@@ -90,9 +92,13 @@ export const editBudget = async ( state, formData) => {
     budget.colorPref = colorPref;
   }
   
-  const savedBudget = await budget.save();
+   await budget.save();
+    revalidatePath('/budgets');
   return {
     success: true,
+    budgetCategory,
+    maxSpend,
+    colorPref,
     message: "Budget has been updated successfully",
   };
 };
@@ -110,6 +116,7 @@ export const getBugets = async () => {
 export const deleteBudget = async (id) => {
   await connectDB();
   await Budget.deleteOne({ id });
+  revalidatePath('/budgets');
   return {
     isSuccess: true,
     message: "Budget deleted successfully",

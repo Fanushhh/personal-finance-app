@@ -1,23 +1,14 @@
-"use client";
+
 
 import { getBugets } from "@/app/actions/bugets";
 import { getAllTransactions } from "@/app/actions/transactions";
 import { useQuery } from "@tanstack/react-query";
 
-export const DonutChart = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["budgets"],
-    queryFn: getBugets,
-  });
-  const {
-    data: transactions,
-    isLoading: areTransactionsLoading,
-    isError: isTransactionError,
-  } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => getAllTransactions(),
-  });
-  const totalTransactionsAmount = Math.abs(transactions?.reduce((acc, nextVal) => {
+export const DonutChart = async () => {
+  
+  const budgets = await getBugets();
+  const transactions = await getAllTransactions();
+  const totalTransactionsAmount = Math.abs(transactions.reduce((acc, nextVal) => {
     const hardCodedTransactionMonth = new Date("2024-08-19T00:00:00Z").getUTCMonth();
     const transactionDate = new Date(nextVal.date).getUTCMonth();
     if(hardCodedTransactionMonth === transactionDate){
@@ -25,12 +16,8 @@ export const DonutChart = () => {
     }
     return acc;
     }, 0));
-  if (areTransactionsLoading) return <p>Loading transactions...</p>;
-  if (isTransactionError) return <p>Error loading transactions</p>;
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading budgets</p>;
-
-  const totalAmount = data?.reduce(
+  
+  const totalAmount = budgets.reduce(
     (acc, budget) => acc + Number(budget.maxSpend),
     0
   );
@@ -68,7 +55,7 @@ export const DonutChart = () => {
         />
 
         {/* Dynamic Budget Segments */}
-        {data?.map((budget, index) => {
+        {budgets.map((budget, index) => {
           const percentage = Number(budget.maxSpend) / totalAmount;
           const strokeDasharray = `${
             percentage * circumference
@@ -113,7 +100,7 @@ export const DonutChart = () => {
       {/* Legend */}
       <figcaption className="w-full flex flex-col gap-4 mt-4 ">
         <p className="preset-2">Spending summary</p>
-        {data?.map((budget) => (
+        {budgets.map((budget) => (
           <div
             key={budget._id}
             className="preset-4 flex justify-between w-full text-(--gray-500)"

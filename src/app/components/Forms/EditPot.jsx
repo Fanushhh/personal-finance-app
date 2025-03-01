@@ -34,6 +34,7 @@ export const EditPotForm = ({
   React.useEffect(() => {
     if (message?.success) {
       queryClient.invalidateQueries("pots");
+      message.success = false;
       closeModal();
     }
   }, [message, closeModal, queryClient]);

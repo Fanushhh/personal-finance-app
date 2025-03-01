@@ -3,7 +3,7 @@ import { PotValidationSchema, AddMoneyValidationSchema, WithdrawMoneyValidationS
 import { connectDB } from "../lib/mongo";
 import { getSession } from "../lib/session";
 import Pot from "../models/Pots";
-
+import { revalidatePath } from "next/cache";
 export const createPot = async (state, formData) => {
   const { userId } = await getSession();
   
@@ -42,6 +42,7 @@ export const createPot = async (state, formData) => {
     colorPref,
   });
   await pot.save();
+  revalidatePath('/pots');
   return {
     success: true,
     message: "Pot added successfully",
@@ -78,6 +79,7 @@ export const editPot = async ( state, formData) => {
   }
   
   await pot.save();
+  revalidatePath('/pots');
   return {
     success: true,
     message: "Budget has been updated successfully",
@@ -96,6 +98,7 @@ export const getPots = async (limit) => {
 export const deletePot = async (id) => {
   await connectDB();
   await Pot.findByIdAndDelete(id);
+  revalidatePath('/pots');
   return {
     isSuccess: true,
     message: "Pot deleted successfully",
@@ -121,6 +124,7 @@ export const addMoneyToPot = async (state, formData) => {
   pot.currentAmount += Number(addedAmount);
   
   await pot.save();
+  revalidatePath('/pots');
   return {
     success: true,
     message: "Money added successfully",
@@ -147,6 +151,7 @@ export const withdrawPotMoney = async (state, formData) => {
   pot.currentAmount -= withdrawnAmount;
   
   await pot.save();
+  revalidatePath('/pots');
   return {
     success: true,
     message: "Money added successfully",

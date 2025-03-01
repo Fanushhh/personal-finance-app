@@ -42,7 +42,6 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
       const hardCodedTransactionMonth = new Date("2024-08-19T00:00:00Z").getUTCMonth(); // should also be 7
       
       if(transactionDate === hardCodedTransactionMonth){
-        console.log(nextVal.amount)
         return acc + nextVal.amount;
       }
       return acc;
@@ -174,7 +173,7 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
         </div>
       </div>
 
-      <ModalComponent
+      {openEditModal  && <ModalComponent
         ref={editModalRef}
         closeModal={() => closeEditModal(editModalRef)}
       >
@@ -185,8 +184,8 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
           colorPref={colorPref}
           closeModal={() => closeEditModal(editModalRef)}
         />
-      </ModalComponent>
-      <ModalComponent
+      </ModalComponent>}
+      {openDeleteModal && <ModalComponent
         ref={deleteModalRef}
         closeModal={() => closeDeleteModal(deleteModalRef)}
       >
@@ -195,7 +194,7 @@ export const Budget = ({ id, category, maxSpend, colorPref, transactions }) => {
           handleDelete={(e) => handleDelete(e, id)}
           closeModal={() => closeDeleteModal(deleteModalRef)}
         />
-      </ModalComponent>
+      </ModalComponent>}
     </div>
   );
 };
