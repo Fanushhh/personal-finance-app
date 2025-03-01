@@ -1,4 +1,4 @@
-
+'use client'
 import { useState } from "react";
 import { ModalComponent } from "../Modals/ModalComponent";
 import { DeletePot } from "../Forms/DeletePot";
