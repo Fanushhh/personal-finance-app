@@ -13,7 +13,7 @@ export default function Navigation() {
 
   return (
     <>
-      <header
+      <header role="navigation"
         className={`bg-black pt-3  ease-in-out transition-all
       ${minimized ? "w-[100px]" : "w-[300px]"} 
       min-[999px]:min-h-screen 

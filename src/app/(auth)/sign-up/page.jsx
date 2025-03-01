@@ -9,7 +9,7 @@ export default function SignUpPage(){
 
 
     return(
-        <section className="p-6 flex w-full h-screen">
+        <main role="main" className="p-6 flex w-full h-screen">
       <div className="max-[1200px]:hidden bg-[url('/assets/images/illustration-authentication.svg')] bg-cover bg-center bg-no-repeat w-1/3 text-white p-10 flex flex-col justify-between">
         <SVGIcon iconName="logoLarge" />
         <div className="">
@@ -23,6 +23,6 @@ export default function SignUpPage(){
         </div>
       </div>
       <SignUpForm />
-    </section>
+    </main>
     )
 }
