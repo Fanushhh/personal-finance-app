@@ -1,4 +1,5 @@
 import { IncomeDetails } from "../components/IncomeDetails/IncomeDetails";
+import Skeleton from "../components/LoadingSkeleton/LoadingSkeleton";
 import { OverviewLeft } from "../components/OverviewLeftComponents/OverviewLeft";
 import { OverviewRight } from "../components/OverviewRight/OverviewRight";
 

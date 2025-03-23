@@ -3,6 +3,7 @@
 import { BudgetHeader } from "@/app/components/BugetHeader/BudgetHeader";
 import BudgetList from "@/app/components/BudgetList/BudgetList";
 import { DonutChart } from "@/app/components/DonutChart/DonutChart";
+import Skeleton from "@/app/components/LoadingSkeleton/LoadingSkeleton";
 
 
 export default async function Page() {

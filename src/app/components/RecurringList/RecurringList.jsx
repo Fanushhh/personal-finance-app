@@ -20,9 +20,6 @@ export const RecurringList = () => {
     placeholderData: keepPreviousData,
   });
    // fetch data with/without the URL params
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
   if (isError) {
     return <p>Error loading bills</p>;
   }
