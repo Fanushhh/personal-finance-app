@@ -7,6 +7,18 @@ export const maxDuration = 60; // Applies to the actions
 export default function SignInForm() {
  
   const [state, action, isPending] = useActionState(signin, undefined);
+  const [loginData, setLoginData] = useState({
+    email:"",
+    password:""
+  });
+  const handleChange = (e) => {
+    setLoginData((prevData) => {
+      return {
+        ...prevData,
+        [e.target.name]:e.target.value
+      }
+    })
+  }
 
   return (
     <div className="max-[1200px]:w-full w-2/3 flex items-center justify-center">
@@ -17,14 +29,14 @@ export default function SignInForm() {
         <h1 className="text-4xl font-bold mb-6">Login</h1>
         <div className="flex flex-col gap-3 ">
           <label htmlFor="email">Email</label>
-          <input type="text" name="email" id="email" />
+          <input type="text" name="email" id="email" value={loginData.email} onChange={handleChange}/>
         </div>
         {state?.errors?.email && (
           <p className="text-red-500">{state.errors.email}</p>
         )}
         <div className="flex flex-col gap-3 ">
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" />
+          <input type="password" name="password" id="password" value={loginData.password} onChange={handleChange}/>
         </div>
         {state?.errors?.password && (
           <p className="text-red-500">{state.errors.password}</p>
@@ -32,7 +44,8 @@ export default function SignInForm() {
         {state?.errors?.generalError && <p className="text-red-500">{state.errors.generalError}</p>}
         <button
           type="submit"
-          className="bg-[var(--gray-900)] text-white py-4 rounded-xl mt-2 hover:bg-[var(--gray-500)] transition-colors ease-in-out"
+          style={{backgroundColor:isPending? "black": ""}}
+          className="bg-[var(--gray-900)] text-white py-4 rounded-xl mt-2  transition-colors ease-in-out"
         >
           { isPending ? <img src="./assets/images/loading.svg" alt="loading" className="w-10 mx-auto" /> : "Login"}
         </button>

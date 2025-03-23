@@ -5,7 +5,7 @@ import SVGIcon from "../SVGIcon/SVGIcon";
 import { usePathname } from "next/navigation";
 import { MinimizeButton } from "../MinimizeButton/Minimize";
 import { deleteSession } from "@/app/lib/session";
-
+import Image from "next/image";
 export default function Navigation() {
   const pathName = usePathname();
   const selected = (href) => pathName === href;
@@ -13,7 +13,8 @@ export default function Navigation() {
 
   return (
     <>
-      <header role="navigation"
+      <header
+        role="navigation"
         className={`bg-black pt-3  ease-in-out transition-all
       ${minimized ? "w-[100px]" : "w-[300px]"} 
       min-[999px]:min-h-screen 
@@ -56,14 +57,28 @@ export default function Navigation() {
                 icon="iconNavRecurring"
               ></NavButton>
             </li>
+            
             <li>
               <button
-                className="text-white bg-red"
+                className="text-(--gray-500) bg-(--black) font-bold  py-2 rounded-xl ml-6 flex items-center gap-4"
                 onClick={() => deleteSession()}
               >
-                Logout
+                <svg
+                  fill="#b3b3b3"
+                  height="88px"
+                  width="88px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="-38.5 -38.5 461.97 461.97"
+                  stroke="#b3b3b3"
+                  strokeWidth="24.253173"
+                >
+                  <path d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03 C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03 C192.485,366.299,187.095,360.91,180.455,360.91z"></path>
+                  <path d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279 c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179 c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z"></path>
+                </svg>
+               
               </button>
             </li>
+            
           </ul>
         </nav>
       </header>
@@ -125,15 +140,27 @@ export default function Navigation() {
             </li>
             <li>
               <button
-                className="text-white bg-red"
+                className="text-(--gray-500) bg-(--black) font-bold  py-2 rounded-xl ml-6 flex items-center gap-4"
                 onClick={() => deleteSession()}
               >
-                Logout
+                <svg
+                  fill="#b3b3b3"
+                  height="88px"
+                  width="88px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="-38.5 -38.5 461.97 461.97"
+                  stroke="#b3b3b3"
+                  strokeWidth="24.253173"
+                >
+                  <path d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03 C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03 C192.485,366.299,187.095,360.91,180.455,360.91z"></path>
+                  <path d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279 c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179 c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z"></path>
+                </svg>
+                {minimized ? "" : "Logout"}
               </button>
             </li>
           </ul>
         </nav>
-        <button onClick={() => deleteSession()}>Logout</button>
+
         <MinimizeButton minimizeButton={setMinimized} minimized={minimized} />
       </header>
     </>
