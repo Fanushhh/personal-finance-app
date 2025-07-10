@@ -69,7 +69,12 @@ export async function signup(state, formData) {
 }
 
 export async function signin(state, formData) {
-  const client = await getRedisClient();
+  let client;
+  try {
+    client = await getRedisClient();
+  } catch (err) {
+    console.error("Redis connection failed:", err);
+  }
 
   const result = LoginFormSchema.safeParse({
     email: formData.get("email"),
@@ -81,14 +86,18 @@ export async function signin(state, formData) {
       errors: result.error.flatten().fieldErrors,
     };
   }
-  const cachedUser = await client.hGetAll(`user:${result.data.email}`);
 
-  if (cachedUser.email) {
-    console.log("caching is called");
-    const wrongPassword = !(await bcrypt.compare(
-      result.data.password,
-      cachedUser.password
-    ));
+  const { email, password } = result.data;
+  let cachedUser = null;
+
+  if (client) {
+    cachedUser = await client.hGetAll(`user:${email}`);
+  }
+
+  if (cachedUser && cachedUser.email) {
+    console.log("Using Redis cache");
+
+    const wrongPassword = !(await bcrypt.compare(password, cachedUser.password));
     if (wrongPassword) {
       return {
         errors: {
@@ -97,34 +106,31 @@ export async function signin(state, formData) {
       };
     }
 
-    createSession(cachedUser.id);
-
-    return redirect("/");
-  } else {
-    console.log("caching is not called");
-    await connectDB();
-    const user = await User.findOne({ email: result.data.email });
-    if (!user) {
-      return {
-        errors: {
-          email: "There is no account with this email",
-        },
-      };
-    }
-    const wrongPassword = !(await bcrypt.compare(
-      result.data.password,
-      user.password
-    ));
-    if (wrongPassword) {
-      return {
-        errors: {
-          password: "Incorrect password",
-        },
-      };
-    }
-
-    createSession(user._id);
-
+    await createSession(cachedUser.id);
     return redirect("/");
   }
+
+  console.log("Fallback to MongoDB");
+
+  await connectDB();
+  const user = await User.findOne({ email });
+  if (!user) {
+    return {
+      errors: {
+        generalError: "Incorrect email or password",
+      },
+    };
+  }
+
+  const wrongPassword = !(await bcrypt.compare(password, user.password));
+  if (wrongPassword) {
+    return {
+      errors: {
+        generalError: "Incorrect email or password",
+      },
+    };
+  }
+
+  await createSession(user._id);
+  return redirect("/");
 }
