@@ -48,7 +48,7 @@ export async function signup(state, formData) {
   const savedUser = await user.save();
   
 
-  createSession(savedUser._id);
+  await createSession(savedUser._id);
 
   return redirect("/login");
 }
